@@ -1,0 +1,91 @@
+{
+  "hero": {
+    "title": "UL.CO",
+    "subtitle": "TARULI PASARIBU", 
+    "description": "UL.CO menghadirkan koleksi ready-to-wear berbahan Ulos dengan desain modern yang fungsional, menjadikan warisan budaya relevan dalam keseharian",
+    "backgroundImage": "/image/1_1.jpg"
+  },
+  "philosophy": {
+    "title": "Design Philosophy",
+    "subtitle": "WARISAN ELEGAN KEINDAHAN ABADI",
+    "description": "UL.CO menghadirkan fashion berbasis kain ulos,mengenakan warisan budaya suku Batak dalam keseharian. Melalui pendekatan sustainable fashion, UL.CO memastikan setiap produk ramah lingkungan melalui konsep Zero Waste, pemanfaatan limbah tenun, serta pewarnaan alami."
+  },
+  "about": {
+    "designer": {
+      "name": "Taruli Pasaribu",
+      "title": "Fashion Designer & Founder",
+      "bio": "Taruli Pasaribu is a visionary fashion designer and the founder of UL.CO Taruli Pasaribu, a brand that blends bold creativity with timeless elegance.",
+      "image": "/image/uli.jpg",
+      "philosophy": "Setiap benang adalah warisan. Setiap motif adalah cerita. Setiap karya adalah penghormatan.",
+      "description": "Sebagai desainer dari Tanah Batak, Taruli Pasaribu menjadikan ulos bukan sekadar kain, melainkan simbol identitas, kekuatan, dan kasih sayang."
+    },
+    "achievements": [
+      {
+        "title": "Fashion show bersama Dekranasda",
+        "year": "2023",
+        "type": "Event"
+      },
+      {
+        "title": "Lolos Inkubator Bisnis Kementerian Perindustrian",
+        "year": "2024",
+        "type": "Program"
+      },
+      {
+        "title": "Lolos Binaan Wirusaha Unggulan Bank Indonesia",
+        "year": "2025",
+        "type": "Program"
+      },
+      {
+        "title": "Juara 3 Lomba Wirausaha Muda",
+        "year": "2025",
+        "type": "Award"
+      }
+    ]
+  },
+  "contact": {
+    "whatsapp": "6281234567890",
+    "instagram": "@ul.co_tarulipasaribu",
+    "email": "info@ulco.com",
+    "address": "Siantar, Sumatera Utara"
+  },
+  "footer": {
+    "brandDescription": "UL.CO menghadirkan fashion berbasis kain ulos dengan desain modern dan berkelanjutan.",
+    "copyright": "© 2025 UL.CO Taruli Pasaribu. All Rights Reserved.",
+    "bottomText": "Built with ❤️ by UL.CO",
+    "socialLinks": [
+      {
+        "platform": "Instagram",
+        "url": "https://instagram.com/ul.co_tarulipasaribu/",
+        "icon": "instagram"
+      },
+      {
+        "platform": "WhatsApp",
+        "url": "https://wa.me/6281234567890",
+        "icon": "whatsapp"
+      },
+      {
+        "platform": "Email",
+        "url": "mailto:info@ulco.com",
+        "icon": "email"
+      }
+    ],
+    "navigation": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "About",
+        "href": "/about"
+      },
+      {
+        "label": "Portfolio",
+        "href": "/portfolio"
+      },
+      {
+        "label": "Contact",
+        "href": "/contact"
+      }
+    ]
+  }
+}

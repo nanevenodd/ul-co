@@ -1,37 +1,47 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import PublicBreadcrumb from "@/components/PublicBreadcrumb";
 
 const portfolioItems = [
   {
     title: "Marparbuei",
     category: "Marparbuei Collection",
-    description: "Marparbuei,sebuah perjalanan budaya yang dituangkan ke dalam karya busana etnik modern.",
+    description: "Marparbuei, sebuah perjalanan budaya yang dituangkan ke dalam karya busana etnik modern.",
     image: "/image/marparbuei.jpg",
     color: "rose",
     slug: "marparbuei",
+    featured: true,
+    year: "2024",
   },
   {
     title: "Butet",
-    category: "Butet Collection",
+    category: "Butet Collection", 
     description: "Koleksi terbaru dari UL.CO yang memadukan kekuatan perempuan dengan keindahan kain ulos pucca.",
     image: "/image/butet.jpg",
     color: "blue",
     slug: "butet",
+    featured: true,
+    year: "2024",
   },
   {
     title: "Aksesoris",
     category: "Koleksi Aksesoris",
-    description: "Koleksi Dramatic statements and luxurious textures for evening wear",
+    description: "Koleksi aksesoris eksklusif dengan konsep zero waste yang menciptakan karya unik dari sisa produksi.",
     image: "/image/aksesoris.jpeg",
-    color: "purple",
+    color: "purple", 
     slug: "aksesoris",
+    featured: false,
+    year: "2024",
   },
 ];
 
 const getColorClasses = (color: string) => {
   const colorMap = {
     rose: "from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700",
-    blue: "from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700",
+    blue: "from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700", 
     purple: "from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700",
     amber: "from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700",
     gray: "from-gray-600 to-gray-800 hover:from-gray-700 hover:to-gray-900",
@@ -41,6 +51,24 @@ const getColorClasses = (color: string) => {
 };
 
 const PortfolioPage = () => {
+  const [activeFilter, setActiveFilter] = useState("All Collections");
+  const [filteredItems, setFilteredItems] = useState(portfolioItems);
+
+  const filterOptions = [
+    "All Collections", 
+    "Marparbuei", 
+    "Butet", 
+    "Aksesoris"
+  ];
+
+  const handleFilter = (filter: string) => {
+    setActiveFilter(filter);
+    if (filter === "All Collections") {
+      setFilteredItems(portfolioItems);
+    } else {
+      setFilteredItems(portfolioItems.filter(item => item.title === filter));
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-amber-50">
       {/* Hero Section */}
@@ -52,6 +80,8 @@ const PortfolioPage = () => {
         </div>
 
         <div className="container mx-auto px-4 text-center relative z-10">
+          <PublicBreadcrumb items={[{ label: 'Portfolio', current: true }]} className="max-w-4xl mx-auto mb-8" />
+          
           <div className="animate-fade-in">
             <h1 className="text-5xl md:text-4xl font-extralight leading-tight mb-8 tracking-wide text-white">
               Halo Dongan
@@ -76,10 +106,19 @@ const PortfolioPage = () => {
       <section className="py-8 bg-white/80 backdrop-blur-sm border-y border-rose-100">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-4">
-            <button className="px-6 py-2 bg-[#921e27] text-white rounded-full font-medium transition-all duration-300 hover:scale-105 shadow-lg">All Collections</button>
-            <button className="px-6 py-2 bg-white border-2 border-gray-200 text-gray-700 rounded-full font-medium hover:border-[#921e27] hover:text-[#921e27] transition-all duration-300 hover:scale-105">Marparbuei</button>
-            <button className="px-6 py-2 bg-white border-2 border-gray-200 text-gray-700 rounded-full font-medium hover:border-[#921e27] hover:text-[#921e27] transition-all duration-300 hover:scale-105">Butet</button>
-            <button className="px-6 py-2 bg-white border-2 border-gray-200 text-gray-700 rounded-full font-medium hover:border-[#921e27] hover:text-[#921e27] transition-all duration-300 hover:scale-105">Aksesoris</button>
+            {filterOptions.map((option) => (
+              <button
+                key={option}
+                onClick={() => handleFilter(option)}
+                className={`px-6 py-2 rounded-full font-medium transition-all duration-300 hover:scale-105 shadow-lg ${
+                  activeFilter === option
+                    ? "bg-[#921e27] text-white"
+                    : "bg-white border-2 border-gray-200 text-gray-700 hover:border-[#921e27] hover:text-[#921e27]"
+                }`}
+              >
+                {option}
+              </button>
+            ))}
           </div>
         </div>
       </section>
@@ -88,7 +127,7 @@ const PortfolioPage = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {portfolioItems.map((item, index) => (
+            {filteredItems.map((item, index) => (
               <div key={item.title} className="group animate-fade-in-scroll" style={{ animationDelay: `${index * 100}ms` }}>
                 <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transform transition-all duration-500 hover:scale-105 hover:-rotate-1">
                   <div className="relative overflow-hidden">

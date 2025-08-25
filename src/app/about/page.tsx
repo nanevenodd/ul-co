@@ -1,7 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import PublicBreadcrumb from "@/components/PublicBreadcrumb";
+import { promises as fs } from 'fs';
+import path from 'path';
 
-const AboutPage = () => {
+async function getContent() {
+  const contentFile = path.join(process.cwd(), 'src/data/content.json');
+  const contentData = await fs.readFile(contentFile, 'utf8');
+  return JSON.parse(contentData);
+}
+
+const AboutPage = async () => {
+  const content = await getContent();
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-amber-50">
       {/* Hero Section */}
@@ -13,11 +23,13 @@ const AboutPage = () => {
         </div>
 
         <div className="container mx-auto px-4 text-center relative z-10">
+          <PublicBreadcrumb items={[{ label: 'About', current: true }]} className="max-w-4xl mx-auto" />
+          
           <div className="animate-fade-in">
             <h1 className="text-6xl md:text-2xl font-extralight leading-tight mb-8 tracking-wide text-gray-800">
               Tentang
               <span className="block text-5xl md:text-8xl mt-2 bg-[#931f28] bg-clip-text text-transparent" style={{ fontFamily: "'Alex Brush', cursive" }}>
-                Taruli Pasaribu
+                {content.about.designer.name}
               </span>
             </h1>
 
@@ -28,8 +40,7 @@ const AboutPage = () => {
             </div>
 
             <p className="text-xl md:text-xl font-light text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Taruli Pasaribu is a visionary fashion designer and the founder of UL.CO Taruli Pasaribu, a brand that blends bold creativity with timeless elegance. With a strong presence in the Indonesian fashion scene, Taruli is also the
-              creative force behind @fashion.design.siantar, where she nurtures emerging talent and promotes local design excellence.
+              {content.about.designer.bio}
             </p>
           </div>
         </div>
@@ -44,7 +55,7 @@ const AboutPage = () => {
               <div className="relative">
                 <div className="absolute -top-6 -left-6 w-full h-full bg-gradient-to-br from-[#7a1a21] to-[#921e27] rounded-3xl opacity-30"></div>
                 <div className="relative bg-white rounded-3xl overflow-hidden shadow-2xl">
-                  <Image src="/image/uli.jpg" alt="Fashion Designer Portrait" width={600} height={700} className="w-full h-96 lg:h-[500px] object-cover object-[0_20%]" />
+                  <Image src={content.about.designer.image} alt={content.about.designer.name} width={600} height={700} className="w-full h-96 lg:h-[500px] object-cover object-[0_20%]" />
                 </div>
 
                 {/* Floating stats */}
@@ -68,25 +79,26 @@ const AboutPage = () => {
             <div className="animate-fade-in-scroll">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-4xl md:text-5xl font-light mb-6 tracking-wide text-white">Taruli Pasaribu</h2>
-                  <p className="text-lg leading-relaxed mb-6 text-neutral-200">Setiap benang adalah warisan. Setiap motif adalah cerita. Setiap karya adalah penghormatan.</p>
+                  <h2 className="text-4xl md:text-5xl font-light mb-6 tracking-wide text-white">{content.about.designer.name}</h2>
+                  <p className="text-lg leading-relaxed mb-6 text-neutral-200">{content.about.designer.philosophy}</p>
                   <p className="text-lg leading-relaxed text-neutral-200">
-                    Sebagai desainer dari Tanah Batak, Taruli Pasaribu menjadikan ulos bukan sekadar kain, melainkan simbol identitas, kekuatan, dan kasih sayang. Filosofi desainnya berakar pada nilai-nilai leluhur, namun tumbuh dalam
-                    semangat inovasi dan keberlanjutan.
+                    {content.about.designer.description}
                   </p>
                 </div>
 
                 {/* Achievement highlights */}
                 <div className="grid grid-cols-2 gap-6">
-                  <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
-                    <div className="w-12 h-12 bg-gradient-to-r from-[#921e27] to-[#7a1a21] rounded-full flex items-center justify-center mx-auto mb-4">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
+                  {content.about.achievements.slice(0, 2).map((achievement: { title: string; year: string; type: string }, index: number) => (
+                    <div key={index} className="text-center p-6 bg-white rounded-2xl shadow-lg">
+                      <div className="w-12 h-12 bg-gradient-to-r from-[#921e27] to-[#7a1a21] rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div className="text-2xl font-light text-[#921e27] mb-1">{achievement.year}</div>
+                      <div className="text-sm text-gray-600">{achievement.title}</div>
                     </div>
-                    <div className="text-2xl font-light text-[#921e27] mb-1">Juara 2</div>
-                    <div className="text-sm text-gray-600">Desain Wastra Tapanuli</div>
-                  </div>
+                  ))}
 
                   <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
                     <div className="w-12 h-12 bg-gradient-to-r from-[#7a1a21] to-[#5e0e15] rounded-full flex items-center justify-center mx-auto mb-4">

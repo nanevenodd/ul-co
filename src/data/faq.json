@@ -1,0 +1,31 @@
+{
+  "faqs": [
+    {
+      "id": "1",
+      "question": "How do I place an order?",
+      "answer": "You can place an order by contacting us through WhatsApp or Instagram. We'll guide you through the process and discuss your requirements.",
+      "order": 1,
+      "isActive": true,
+      "createdAt": "2025-08-25T07:52:17.677Z",
+      "updatedAt": "2025-08-25T07:52:17.677Z"
+    },
+    {
+      "id": "2",
+      "question": "What is the typical delivery time?",
+      "answer": "Delivery time varies depending on the complexity of the design and current workload. Generally, it takes 2-4 weeks for custom pieces.",
+      "order": 2,
+      "isActive": true,
+      "createdAt": "2025-08-25T07:52:17.677Z",
+      "updatedAt": "2025-08-25T07:52:17.677Z"
+    },
+    {
+      "id": "3",
+      "question": "Do you ship internationally?",
+      "answer": "Currently, we primarily serve customers in Indonesia. For international shipping, please contact us to discuss options and pricing.",
+      "order": 3,
+      "isActive": true,
+      "createdAt": "2025-08-25T07:52:17.677Z",
+      "updatedAt": "2025-08-25T07:52:17.677Z"
+    }
+  ]
+}

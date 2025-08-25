@@ -1,51 +1,82 @@
 import Image from "next/image";
 import Link from "next/link";
+import { promises as fs } from 'fs';
+import path from 'path';
 
-export default function Home() {
+async function getContent() {
+  const contentFile = path.join(process.cwd(), 'src/data/content.json');
+  const collectionsFile = path.join(process.cwd(), 'src/data/collections.json');
+  
+  const [contentData, collectionsData] = await Promise.all([
+    fs.readFile(contentFile, 'utf8'),
+    fs.readFile(collectionsFile, 'utf8')
+  ]);
+
+  return {
+    content: JSON.parse(contentData),
+    collections: JSON.parse(collectionsData).collections.filter((c: { featured: boolean }) => c.featured)
+  };
+}
+
+export default async function Home() {
+  const { content } = await getContent();
   return (
     <div className="flex flex-col bg-gradient-to-br from-rose-50 via-white to-amber-50 min-h-screen">
       {/* Hero Section - Modern Fashion Design */}
-      <section className="h-screen obg-cover bg-center flex items-center justify-center text-center text-gray-900 relative overflow-hidden" style={{ backgroundImage: "url('/image/1_1.jpg')" }}>
-        <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
+      <section className="min-h-screen bg-cover bg-center flex items-center justify-center text-center text-gray-900 relative overflow-hidden" style={{ backgroundImage: `url('${content.hero.backgroundImage}')` }}>
+        {/* Improved overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/10 to-black/20 backdrop-blur-[2px]"></div>
 
-        {/* Floating elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-[#f5d4d7] to-[#921e27] rounded-full opacity-70 animate-float"></div>
-        <div className="absolute bottom-32 right-16 w-24 h-24 bg-gradient-to-br from-[#f8cfcf] to-[#921e27] rounded-full opacity-60 animate-float delay-1000"></div>
-        <div className="absolute top-1/3 right-20 w-20 h-20 bg-gradient-to-br from-[#e8cce0] to-[#921e27] rounded-full opacity-50 animate-float delay-2000"></div>
+        {/* Enhanced floating elements */}
+        <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-[#f5d4d7]/80 to-[#921e27]/60 rounded-full opacity-70 animate-float blur-sm"></div>
+        <div className="absolute bottom-32 right-16 w-32 h-32 bg-gradient-to-br from-[#f8cfcf]/80 to-[#921e27]/60 rounded-full opacity-60 animate-float delay-1000 blur-sm"></div>
+        <div className="absolute top-1/3 right-20 w-24 h-24 bg-gradient-to-br from-[#e8cce0]/80 to-[#921e27]/60 rounded-full opacity-50 animate-float delay-2000 blur-sm"></div>
 
-        <div className="relative z-10 animate-fade-in max-w-4xl px-4">
-          <div className="mb-8">
-            <h1 className="text-6xl md:text-8xl font-extralight leading-tight mb-6 tracking-wide">
-              <span className="text-[#921e27]">UL.CO</span>
-              <br />
-              <span className="text-4xl md:text-5xl font-light text-[#921e27]">TARULI PASARIBU</span>
+        <div className="relative z-10 animate-fade-in max-w-6xl px-4">
+          <div className="mb-12">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extralight leading-tight mb-8 tracking-wide">
+              <span className="block text-[#921e27] drop-shadow-lg">{content.hero.title}</span>
+              <span className="block text-3xl md:text-4xl lg:text-5xl font-light text-[#921e27]/90 mt-4">{content.hero.subtitle}</span>
             </h1>
-            <div className="flex items-center justify-center space-x-4 mb-8">
-              <div className="h-px w-16 bg-gradient-to-r from-transparent to-rose-400"></div>
-              <div className="w-3 h-3 bg-rose-400 rounded-full"></div>
-              <div className="h-px w-16 bg-gradient-to-l from-transparent to-amber-400"></div>
+            
+            {/* Enhanced decorative line */}
+            <div className="flex items-center justify-center space-x-6 mb-8">
+              <div className="h-px w-20 bg-gradient-to-r from-transparent via-rose-400 to-transparent"></div>
+              <div className="w-4 h-4 bg-gradient-to-br from-rose-400 to-amber-400 rounded-full shadow-lg"></div>
+              <div className="h-px w-20 bg-gradient-to-l from-transparent via-amber-400 to-transparent"></div>
             </div>
           </div>
 
-          <p className="text-lg md:text-xl font-light mb-12 max-w-3xl mx-auto text-gray-600 leading-relaxed">
-            UL.CO menghadirkan koleksi ready-to-wear berbahan Ulos dengan desain modern yang fungsional , menjadikan warisan budaya relevan dalam keseharian
+          <p className="text-lg md:text-xl lg:text-2xl font-light mb-12 max-w-4xl mx-auto text-gray-700 leading-relaxed drop-shadow-sm">
+            {content.hero.description}
           </p>
 
-          <div className="animate-slide-up delay-500 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex sm:justify-center">
+          {/* Enhanced CTA buttons */}
+          <div className="flex flex-col md:flex-row gap-6 justify-center items-center mb-16">
             <Link
               href="/portfolio"
-              className="group inline-flex items-center justify-center bg-[#921e27] text-white font-medium py-4 px-8 rounded-full hover:bg-[#7a1a21] transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-[#921e27]/50">
-              <span className="mr-2">View Collection</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              className="group bg-gradient-to-r from-[#921e27] to-[#7a1a21] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3"
+            >
+              <span>Explore Collections</span>
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </Link>
-
+            
             <Link
               href="/about"
-              className="inline-flex items-center justify-center border-2 border-gray-800 text-gray-800 font-medium py-4 px-8 rounded-full hover:bg-gray-800 hover:text-white transition-all duration-300 transform hover:scale-105">
-              About Designer
+              className="group bg-white/90 text-[#921e27] px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl border-2 border-[#921e27]/20 hover:border-[#921e27]/40 transform hover:scale-105 transition-all duration-300 backdrop-blur-sm"
+            >
+              Meet the Designer
             </Link>
+          </div>
+
+          {/* Scroll indicator */}
+          <div className="animate-bounce">
+            <svg className="w-6 h-6 mx-auto text-[#921e27]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+            <p className="text-sm text-[#921e27]/70 mt-2">Scroll to explore</p>
           </div>
         </div>
       </section>
