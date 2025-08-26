@@ -38,24 +38,35 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// PUT - Update collection
+// PUT - Update collection or collections
 export async function PUT(request: NextRequest) {
   try {
-    const updatedCollection = await request.json();
+    const requestData = await request.json();
+    console.log('PUT request received:', requestData);
     
     const fileContent = await fs.readFile(COLLECTIONS_FILE, 'utf8');
     const data = JSON.parse(fileContent);
     
-    const index = data.collections.findIndex((c: { id: string }) => c.id === updatedCollection.id);
-    if (index === -1) {
-      return NextResponse.json({ error: 'Collection not found' }, { status: 404 });
+    // Check if we're updating multiple collections or single collection
+    if (requestData.collections) {
+      // Update all collections (for bulk updates from product management)
+      console.log('Updating all collections');
+      data.collections = requestData.collections;
+    } else {
+      // Update single collection
+      console.log('Updating single collection');
+      const updatedCollection = requestData;
+      const index = data.collections.findIndex((c: { id: string }) => c.id === updatedCollection.id);
+      if (index === -1) {
+        return NextResponse.json({ error: 'Collection not found' }, { status: 404 });
+      }
+      data.collections[index] = updatedCollection;
     }
     
-    data.collections[index] = updatedCollection;
-    
     await fs.writeFile(COLLECTIONS_FILE, JSON.stringify(data, null, 2));
+    console.log('Collections updated successfully');
     
-    return NextResponse.json({ success: true, collection: updatedCollection });
+    return NextResponse.json({ success: true, collections: data.collections });
   } catch (error) {
     console.error('Error updating collection:', error);
     return NextResponse.json({ error: 'Failed to update collection' }, { status: 500 });

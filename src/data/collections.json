@@ -17,11 +17,24 @@
           "description": "Koleksi yang menceritakan perjalanan budaya Batak melalui interpretasi modern dari ritual tradisional Marparbuei, dengan emphasis pada storytelling melalui textile dan silhouette",
           "category": "Marparbuei",
           "inspiration": "Traditional Ceremony",
-          "price": "Rp 2.500.000",
+          "price": "Rp 400.000",
           "available": true,
-          "sizes": ["S", "M", "L", "XL"],
-          "materials": ["Premium Cotton", "Traditional Ulos", "Gold Thread"],
-          "features": ["Hand-embroidered details", "Traditional patterns", "Modern cut"],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "materials": [
+            "Premium Cotton",
+            "Traditional Ulos",
+            "Gold Thread"
+          ],
+          "features": [
+            "Hand-embroidered details",
+            "Traditional patterns",
+            "Modern cut"
+          ],
           "whatsappTemplate": "Halo! Saya tertarik dengan *Outer Ulos* dari koleksi Marparbuei (Rp 2.500.000). Bisa info detail ukuran dan ketersediaan?"
         },
         {
@@ -31,11 +44,24 @@
           "description": "Kemeja Putih \"Marparbuei\" – elegan dan penuh makna. Dibuat dari kain brokat premium, ukuran L, dengan sentuhan khas hande-hande di bagian detailnya.",
           "category": "Marparbuei",
           "inspiration": "Sacred Geometry",
-          "price": "Rp 1.800.000",
+          "price": "Rp 400.000",
           "available": true,
-          "sizes": ["S", "M", "L", "XL"],
-          "materials": ["Premium Brocade", "Cotton Lining", "Pearl Buttons"],
-          "features": ["Hande-hande details", "Premium fabric", "Elegant cut"],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "materials": [
+            "Premium Brocade",
+            "Cotton Lining",
+            "Pearl Buttons"
+          ],
+          "features": [
+            "Hande-hande details",
+            "Premium fabric",
+            "Elegant cut"
+          ],
           "whatsappTemplate": "Halo! Saya tertarik dengan *Kemeja Brokat Premium* dari koleksi Marparbuei (Rp 1.800.000). Bisa info detail ukuran dan ketersediaan?"
         },
         {
@@ -45,11 +71,24 @@
           "description": "Set koordinat yang menggabungkan pattern tradisional dengan urban aesthetics, menciptakan bridge antara warisan leluhur dan lifestyle modern metropolitan",
           "category": "Marparbuei",
           "inspiration": "City Meets Culture",
-          "price": "Rp 3.200.000",
+          "price": "Rp 400.000",
           "available": true,
-          "sizes": ["S", "M", "L", "XL"],
-          "materials": ["Traditional Weave", "Modern Blend", "Geometric Patterns"],
-          "features": ["Urban aesthetics", "Traditional patterns", "Coordinated set"],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "materials": [
+            "Traditional Weave",
+            "Modern Blend",
+            "Geometric Patterns"
+          ],
+          "features": [
+            "Urban aesthetics",
+            "Traditional patterns",
+            "Coordinated set"
+          ],
           "whatsappTemplate": "Halo! Saya tertarik dengan *Outer Hande-Hande* dari koleksi Marparbuei (Rp 3.200.000). Bisa info detail ukuran dan ketersediaan?"
         }
       ]
@@ -71,11 +110,24 @@
           "description": "Outer elegan dengan desain modern dan sentuhan etnik. Dibuat dari bahan berkualitas, dihias detail payet eksklusif yang memberi kilau mewah tanpa berlebihan.",
           "category": "Ready-to-Wear",
           "concept": "Feminine Power",
-          "price": "Rp 2.800.000",
+          "price": "Rp 400.000",
           "available": true,
-          "sizes": ["S", "M", "L", "XL"],
-          "materials": ["Premium Ulos Pucca", "Sequin Details", "Silk Lining"],
-          "features": ["Exclusive sequin details", "Modern ethnic design", "Premium quality"],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "materials": [
+            "Premium Ulos Pucca",
+            "Sequin Details",
+            "Silk Lining"
+          ],
+          "features": [
+            "Exclusive sequin details",
+            "Modern ethnic design",
+            "Premium quality"
+          ],
           "whatsappTemplate": "Halo! Saya tertarik dengan *Outer Pucca Elegant* dari koleksi Butet (Rp 2.800.000). Bisa info detail ukuran dan ketersediaan?"
         }
       ]
@@ -98,8 +150,16 @@
           "category": "Anting",
           "price": "Rp 250.000",
           "available": true,
-          "materials": ["Recycled Ulos", "Sterling Silver", "Pearl Details"],
-          "features": ["Zero waste concept", "Handcrafted", "Lightweight"],
+          "materials": [
+            "Recycled Ulos",
+            "Sterling Silver",
+            "Pearl Details"
+          ],
+          "features": [
+            "Zero waste concept",
+            "Handcrafted",
+            "Lightweight"
+          ],
           "whatsappTemplate": "Halo! Saya tertarik dengan *Anting Bulat Mini* dari koleksi Aksesoris UL.CO (Rp 250.000). Bisa info detail dan ketersediaan?"
         },
         {
@@ -110,8 +170,16 @@
           "category": "Kalung",
           "price": "Rp 350.000",
           "available": true,
-          "materials": ["Ulos Sibolang", "Fresh Water Pearl", "Gold Plated"],
-          "features": ["Zero waste concept", "Traditional pattern", "Elegant design"],
+          "materials": [
+            "Ulos Sibolang",
+            "Fresh Water Pearl",
+            "Gold Plated"
+          ],
+          "features": [
+            "Zero waste concept",
+            "Traditional pattern",
+            "Elegant design"
+          ],
           "whatsappTemplate": "Halo! Saya tertarik dengan *Kalung Sibolang Mutiara* dari koleksi Aksesoris UL.CO (Rp 350.000). Bisa info detail dan ketersediaan?"
         },
         {
@@ -122,8 +190,16 @@
           "category": "Kalung",
           "price": "Rp 420.000",
           "available": true,
-          "materials": ["Multi-layer Ulos", "Crystal Beads", "Adjustable Chain"],
-          "features": ["Layered design", "Sustainable materials", "Versatile styling"],
+          "materials": [
+            "Multi-layer Ulos",
+            "Crystal Beads",
+            "Adjustable Chain"
+          ],
+          "features": [
+            "Layered design",
+            "Sustainable materials",
+            "Versatile styling"
+          ],
           "whatsappTemplate": "Halo! Saya tertarik dengan *Kalung Susun Sibolang* dari koleksi Aksesoris UL.CO (Rp 420.000). Bisa info detail dan ketersediaan?"
         },
         {
@@ -134,8 +210,16 @@
           "category": "Kalung",
           "price": "Rp 380.000",
           "available": true,
-          "materials": ["Ulos Fabric", "Pompom Details", "Cotton Thread"],
-          "features": ["Playful design", "Handmade pompoms", "Unique texture"],
+          "materials": [
+            "Ulos Fabric",
+            "Pompom Details",
+            "Cotton Thread"
+          ],
+          "features": [
+            "Playful design",
+            "Handmade pompoms",
+            "Unique texture"
+          ],
           "whatsappTemplate": "Halo! Saya tertarik dengan *Kalung Pom-Pom Sibolang* dari koleksi Aksesoris UL.CO (Rp 380.000). Bisa info detail dan ketersediaan?"
         },
         {
@@ -146,8 +230,16 @@
           "category": "Kalung",
           "price": "Rp 320.000",
           "available": true,
-          "materials": ["Grey Ulos", "Natural Pearl", "Silver Chain"],
-          "features": ["Neutral tone", "Classic elegance", "Versatile wear"],
+          "materials": [
+            "Grey Ulos",
+            "Natural Pearl",
+            "Silver Chain"
+          ],
+          "features": [
+            "Neutral tone",
+            "Classic elegance",
+            "Versatile wear"
+          ],
           "whatsappTemplate": "Halo! Saya tertarik dengan *Kalung Mutiara Abu* dari koleksi Aksesoris UL.CO (Rp 320.000). Bisa info detail dan ketersediaan?"
         },
         {
@@ -158,8 +250,16 @@
           "category": "Kalung",
           "price": "Rp 450.000",
           "available": true,
-          "materials": ["Crystal Elements", "Ulos Accent", "Premium Chain"],
-          "features": ["Sparkling crystals", "Luxury finish", "Statement piece"],
+          "materials": [
+            "Crystal Elements",
+            "Ulos Accent",
+            "Premium Chain"
+          ],
+          "features": [
+            "Sparkling crystals",
+            "Luxury finish",
+            "Statement piece"
+          ],
           "whatsappTemplate": "Halo! Saya tertarik dengan *Kalung Kristal* dari koleksi Aksesoris UL.CO (Rp 450.000). Bisa info detail dan ketersediaan?"
         }
       ]

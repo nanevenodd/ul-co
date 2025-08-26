@@ -66,6 +66,8 @@ export default function ProductManagement() {
           : collection
       );
 
+      console.log('Sending update request:', { collections: updatedCollections });
+
       const response = await fetch('/api/collections', {
         method: 'PUT',
         headers: {
@@ -74,12 +76,22 @@ export default function ProductManagement() {
         body: JSON.stringify({ collections: updatedCollections }),
       });
 
+      console.log('Response status:', response.status);
+
       if (response.ok) {
-        setCollections(updatedCollections);
+        const result = await response.json();
+        console.log('Update result:', result);
+        setCollections(result.collections);
         setEditingProduct(null);
+        alert('Product updated successfully!');
+      } else {
+        const error = await response.json();
+        console.error('Error response:', error);
+        alert(`Error updating product: ${error.error || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Error updating product:', error);
+      alert('Error updating product. Please try again.');
     }
   };
 
@@ -201,16 +213,32 @@ export default function ProductManagement() {
 
 interface ProductEditFormProps {
   product: ProductItem;
-  onSave: (product: ProductItem) => void;
+  onSave: (product: ProductItem) => Promise<void>;
   onCancel: () => void;
 }
 
 function ProductEditForm({ product, onSave, onCancel }: ProductEditFormProps) {
   const [formData, setFormData] = useState<ProductItem>(product);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    
+    // Validate required fields
+    if (!formData.name || !formData.price) {
+      alert('Please fill in all required fields (Name and Price)');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      await onSave(formData);
+    } catch (error) {
+      console.error('Error saving product:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const updateArrayField = (field: keyof ProductItem, value: string) => {
@@ -330,14 +358,16 @@ function ProductEditForm({ product, onSave, onCancel }: ProductEditFormProps) {
       <div className="flex space-x-3 pt-4">
         <button
           type="submit"
-          className="flex-1 bg-[#921e27] text-white py-3 rounded-lg hover:bg-[#7a1a21] transition-colors"
+          disabled={isSubmitting}
+          className="flex-1 bg-[#921e27] text-white py-3 rounded-lg hover:bg-[#7a1a21] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Save Changes
+          {isSubmitting ? 'Saving...' : 'Save Changes'}
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-400 transition-colors"
+          disabled={isSubmitting}
+          className="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50"
         >
           Cancel
         </button>
