@@ -1,7 +1,7 @@
 {
   "hero": {
     "title": "UL.CO",
-    "subtitle": "TARULI PASARIBU", 
+    "subtitle": "TARULI PASARIBU",
     "description": "UL.CO menghadirkan koleksi ready-to-wear berbahan Ulos dengan desain modern yang fungsional, menjadikan warisan budaya relevan dalam keseharian",
     "backgroundImage": "/image/1_1.jpg"
   },
@@ -43,49 +43,9 @@
     ]
   },
   "contact": {
-    "whatsapp": "6281234567890",
+    "whatsapp": "+62 831-2606-6671",
     "instagram": "@ul.co_tarulipasaribu",
     "email": "info@ulco.com",
     "address": "Siantar, Sumatera Utara"
-  },
-  "footer": {
-    "brandDescription": "UL.CO menghadirkan fashion berbasis kain ulos dengan desain modern dan berkelanjutan.",
-    "copyright": "© 2025 UL.CO Taruli Pasaribu. All Rights Reserved.",
-    "bottomText": "Built with ❤️ by UL.CO",
-    "socialLinks": [
-      {
-        "platform": "Instagram",
-        "url": "https://instagram.com/ul.co_tarulipasaribu/",
-        "icon": "instagram"
-      },
-      {
-        "platform": "WhatsApp",
-        "url": "https://wa.me/6281234567890",
-        "icon": "whatsapp"
-      },
-      {
-        "platform": "Email",
-        "url": "mailto:info@ulco.com",
-        "icon": "email"
-      }
-    ],
-    "navigation": [
-      {
-        "label": "Home",
-        "href": "/"
-      },
-      {
-        "label": "About",
-        "href": "/about"
-      },
-      {
-        "label": "Portfolio",
-        "href": "/portfolio"
-      },
-      {
-        "label": "Contact",
-        "href": "/contact"
-      }
-    ]
   }
 }

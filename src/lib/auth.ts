@@ -1,17 +1,17 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-this';
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-this";
 
 // Default admin credentials (di production, ini harus di environment variables)
 const DEFAULT_ADMIN = {
-  email: 'admin@ulco.com',
-  password: 'admin123', // Hash ini di production
+  email: "admin@ulco.com",
+  password: "admin123", // Hash ini di production
 };
 
 export interface AdminUser {
   email: string;
-  role: 'admin';
+  role: "admin";
 }
 
 export async function validateAdmin(email: string, password: string): Promise<boolean> {
@@ -22,7 +22,7 @@ export async function validateAdmin(email: string, password: string): Promise<bo
 }
 
 export function generateToken(user: AdminUser): string {
-  return jwt.sign(user, JWT_SECRET, { expiresIn: '24h' });
+  return jwt.sign(user, JWT_SECRET, { expiresIn: "24h" });
 }
 
 export function verifyToken(token: string): AdminUser | null {

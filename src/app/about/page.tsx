@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import PublicBreadcrumb from "@/components/PublicBreadcrumb";
-import { promises as fs } from 'fs';
-import path from 'path';
+import { promises as fs } from "fs";
+import path from "path";
 
 async function getContent() {
-  const contentFile = path.join(process.cwd(), 'src/data/content.json');
-  const contentData = await fs.readFile(contentFile, 'utf8');
+  const contentFile = path.join(process.cwd(), "src/data/content.json");
+  const contentData = await fs.readFile(contentFile, "utf8");
   return JSON.parse(contentData);
 }
 
@@ -23,8 +23,8 @@ const AboutPage = async () => {
         </div>
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          <PublicBreadcrumb items={[{ label: 'About', current: true }]} className="max-w-4xl mx-auto" />
-          
+          <PublicBreadcrumb items={[{ label: "About", current: true }]} className="max-w-4xl mx-auto" />
+
           <div className="animate-fade-in">
             <h1 className="text-6xl md:text-2xl font-extralight leading-tight mb-8 tracking-wide text-gray-800">
               Tentang
@@ -39,9 +39,7 @@ const AboutPage = async () => {
               <div className="h-px w-16 bg-gradient-to-l from-transparent to-amber-400"></div>
             </div>
 
-            <p className="text-xl md:text-xl font-light text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              {content.about.designer.bio}
-            </p>
+            <p className="text-xl md:text-xl font-light text-gray-600 max-w-3xl mx-auto leading-relaxed">{content.about.designer.bio}</p>
           </div>
         </div>
       </section>
@@ -81,9 +79,7 @@ const AboutPage = async () => {
                 <div>
                   <h2 className="text-4xl md:text-5xl font-light mb-6 tracking-wide text-white">{content.about.designer.name}</h2>
                   <p className="text-lg leading-relaxed mb-6 text-neutral-200">{content.about.designer.philosophy}</p>
-                  <p className="text-lg leading-relaxed text-neutral-200">
-                    {content.about.designer.description}
-                  </p>
+                  <p className="text-lg leading-relaxed text-neutral-200">{content.about.designer.description}</p>
                 </div>
 
                 {/* Achievement highlights */}

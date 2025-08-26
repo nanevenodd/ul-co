@@ -25,36 +25,36 @@ const ContactPage = () => {
     subject: "",
     message: "",
   });
-  
-    const [contactData, setContactData] = useState<ContactData | null>(null);
+
+  const [contactData, setContactData] = useState<ContactData | null>(null);
   const [faqData, setFaqData] = useState<Array<{ id: string; question: string; answer: string; isActive: boolean }>>([]);
 
   const getFaqs = async () => {
     try {
-      const response = await fetch('/api/faq?active=true');
+      const response = await fetch("/api/faq?active=true");
       if (response.ok) {
         const data = await response.json();
         setFaqData(data.faqs);
       }
     } catch (error) {
-      console.error('Error fetching FAQs:', error);
+      console.error("Error fetching FAQs:", error);
     }
   };
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   useEffect(() => {
     // Fetch contact data from CMS
     const fetchContactData = async () => {
       try {
-        const response = await fetch('/api/content');
+        const response = await fetch("/api/content");
         const data = await response.json();
         setContactData(data);
       } catch (error) {
-        console.error('Error fetching contact data:', error);
+        console.error("Error fetching contact data:", error);
       }
     };
-    
+
     fetchContactData();
     getFaqs();
   }, []);
@@ -69,28 +69,28 @@ const ContactPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus('idle');
+    setSubmitStatus("idle");
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
+      const response = await fetch("/api/contact", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        setSubmitStatus('success');
+        setSubmitStatus("success");
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
         const errorData = await response.json();
-        console.error('Submission error:', errorData);
-        setSubmitStatus('error');
+        console.error("Submission error:", errorData);
+        setSubmitStatus("error");
       }
     } catch (error) {
-      console.error('Network error:', error);
-      setSubmitStatus('error');
+      console.error("Network error:", error);
+      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -107,8 +107,8 @@ const ContactPage = () => {
         </div>
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          <PublicBreadcrumb items={[{ label: 'Contact', current: true }]} className="max-w-4xl mx-auto mb-8" />
-          
+          <PublicBreadcrumb items={[{ label: "Contact", current: true }]} className="max-w-4xl mx-auto mb-8" />
+
           <div className="animate-fade-in">
             <h1 className="text-3xl md:text-5xl font-extralight leading-tight mb-8 tracking-wide text-[#921e27]">
               Get In
@@ -213,16 +213,8 @@ const ContactPage = () => {
                   </button>
 
                   {/* Status Messages */}
-                  {submitStatus === 'success' && (
-                    <div className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                      Message sent successfully! We&apos;ll get back to you soon.
-                    </div>
-                  )}
-                  {submitStatus === 'error' && (
-                    <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                      Failed to send message. Please try again.
-                    </div>
-                  )}
+                  {submitStatus === "success" && <div className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">Message sent successfully! We&apos;ll get back to you soon.</div>}
+                  {submitStatus === "error" && <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">Failed to send message. Please try again.</div>}
                 </form>
               </div>
             </div>
@@ -243,7 +235,7 @@ const ContactPage = () => {
                       </div>
                       <div>
                         <h4 className="font-medium text-white">Email</h4>
-                        <p className="text-white">{contactData?.contact?.email || 'ta8clothing@gmail.com'}</p>
+                        <p className="text-white">{contactData?.contact?.email || "ta8clothing@gmail.com"}</p>
                       </div>
                     </div>
 
@@ -260,7 +252,7 @@ const ContactPage = () => {
                       </div>
                       <div>
                         <h4 className="font-medium text-white">Phone</h4>
-                        <p className="text-white">{contactData?.contact?.phone || '083126066671'}</p>
+                        <p className="text-white">{contactData?.contact?.phone || "083126066671"}</p>
                       </div>
                     </div>
 
@@ -274,7 +266,7 @@ const ContactPage = () => {
                       <div>
                         <h4 className="font-medium text-white">Workshop</h4>
                         <p className="text-white">
-                          {contactData?.contact?.address || 'Siantar, Sumatera Utara'}
+                          {contactData?.contact?.address || "Siantar, Sumatera Utara"}
                           <br />
                           Lewat Booking
                         </p>
@@ -288,8 +280,8 @@ const ContactPage = () => {
                   <h3 className="text-2xl font-light mb-6 text-white">Follow My Work</h3>
 
                   <div className="flex space-x-4">
-                    <a 
-                      href={contactData?.contact?.instagram || "http://instagram.com/ul.co_tarulipasaribu/"} 
+                    <a
+                      href={contactData?.contact?.instagram || "http://instagram.com/ul.co_tarulipasaribu/"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-gray-600 hover:text-rose-600 hover:scale-110 transition-all duration-300 shadow-lg">
@@ -298,13 +290,13 @@ const ContactPage = () => {
                       </svg>
                     </a>
 
-                    <a 
-                      href={`https://wa.me/${contactData?.contact?.whatsapp || '6283126066671'}`}
+                    <a
+                      href={`https://wa.me/${contactData?.contact?.whatsapp || "6283126066671"}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-gray-600 hover:text-green-600 hover:scale-110 transition-all duration-300 shadow-lg">
                       <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
                       </svg>
                     </a>
 
@@ -404,67 +396,63 @@ const ContactPage = () => {
           </div>
 
           <div style={{ maxWidth: "768px", margin: "0 auto" }}>
-            {faqData.length > 0 ? faqData.map((faq, i) => (
-              <div
-                key={faq.id}
-                style={{
-                  animation: "fadeInUp 0.8s ease-out both",
-                  animationDelay: `${(i + 1) * 0.1}s`,
-                  marginBottom: "2rem",
-                }}>
-                <div
-                  style={{
-                    backgroundColor: "white",
-                    color: "#921e27",
-                    borderRadius: "1rem",
-                    padding: "2rem",
-                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
-                  }}>
-                  <h3 style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: "1rem", color: "#921e27" }}>
-                    {faq.question}
-                  </h3>
-                  <p style={{ lineHeight: 1.6 }}>{faq.answer}</p>
-                </div>
-              </div>
-            )) : (
-              // Fallback static FAQs if no data from API
-              [
-                {
-                  question: "How do I place an order?",
-                  answer: "You can place an order by contacting us through WhatsApp or Instagram. We'll guide you through the process and discuss your requirements.",
-                },
-                {
-                  question: "What is the typical delivery time?", 
-                  answer: "Delivery time varies depending on the complexity of the design and current workload. Generally, it takes 2-4 weeks for custom pieces.",
-                },
-                {
-                  question: "Do you ship internationally?",
-                  answer: "Currently, we primarily serve customers in Indonesia. For international shipping, please contact us to discuss options and pricing.",
-                },
-              ].map((faq, i) => (
-                <div
-                  key={i}
-                  style={{
-                    animation: "fadeInUp 0.8s ease-out both",
-                    animationDelay: `${(i + 1) * 0.1}s`,
-                    marginBottom: "2rem",
-                  }}>
+            {faqData.length > 0
+              ? faqData.map((faq, i) => (
                   <div
+                    key={faq.id}
                     style={{
-                      backgroundColor: "white",
-                      color: "#921e27",
-                      borderRadius: "1rem", 
-                      padding: "2rem",
-                      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
+                      animation: "fadeInUp 0.8s ease-out both",
+                      animationDelay: `${(i + 1) * 0.1}s`,
+                      marginBottom: "2rem",
                     }}>
-                    <h3 style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: "1rem", color: "#921e27" }}>
-                      {faq.question}
-                    </h3>
-                    <p style={{ lineHeight: 1.6 }}>{faq.answer}</p>
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        color: "#921e27",
+                        borderRadius: "1rem",
+                        padding: "2rem",
+                        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
+                      }}>
+                      <h3 style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: "1rem", color: "#921e27" }}>{faq.question}</h3>
+                      <p style={{ lineHeight: 1.6 }}>{faq.answer}</p>
+                    </div>
                   </div>
-                </div>
-              ))
-            )}
+                ))
+              : // Fallback static FAQs if no data from API
+                [
+                  {
+                    question: "How do I place an order?",
+                    answer: "You can place an order by contacting us through WhatsApp or Instagram. We'll guide you through the process and discuss your requirements.",
+                  },
+                  {
+                    question: "What is the typical delivery time?",
+                    answer: "Delivery time varies depending on the complexity of the design and current workload. Generally, it takes 2-4 weeks for custom pieces.",
+                  },
+                  {
+                    question: "Do you ship internationally?",
+                    answer: "Currently, we primarily serve customers in Indonesia. For international shipping, please contact us to discuss options and pricing.",
+                  },
+                ].map((faq, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      animation: "fadeInUp 0.8s ease-out both",
+                      animationDelay: `${(i + 1) * 0.1}s`,
+                      marginBottom: "2rem",
+                    }}>
+                    <div
+                      style={{
+                        backgroundColor: "white",
+                        color: "#921e27",
+                        borderRadius: "1rem",
+                        padding: "2rem",
+                        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
+                      }}>
+                      <h3 style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: "1rem", color: "#921e27" }}>{faq.question}</h3>
+                      <p style={{ lineHeight: 1.6 }}>{faq.answer}</p>
+                    </div>
+                  </div>
+                ))}
           </div>
         </div>
       </section>

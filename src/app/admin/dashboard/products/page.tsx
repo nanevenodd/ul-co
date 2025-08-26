@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Breadcrumb from '@/components/Breadcrumb';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import AdminHeader from "@/components/AdminHeader";
+import ImageUpload from "@/components/ImageUpload";
 
 interface ProductItem {
-  id: number;
+  id: string;
   name: string;
   image: string;
   description: string;
@@ -30,72 +31,159 @@ export default function ProductManagement() {
   const [collections, setCollections] = useState<Collection[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingProduct, setEditingProduct] = useState<ProductItem | null>(null);
-  const [selectedCollection, setSelectedCollection] = useState<string>('');
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedCollection, setSelectedCollection] = useState<string>("");
+  const [saving, setSaving] = useState(false);
+  const [newProduct, setNewProduct] = useState<Partial<ProductItem>>({
+    name: "",
+    image: "",
+    description: "",
+    category: "",
+    price: "",
+    available: true,
+    sizes: [],
+    materials: [],
+    features: [],
+    whatsappTemplate: "",
+  });
 
   useEffect(() => {
+    document.title = "Products - ULCO Admin";
     fetchCollections();
   }, []);
 
+  useEffect(() => {
+    // Parse query params for collection selection
+    const urlParams = new URLSearchParams(window.location.search);
+    const collectionParam = urlParams.get("collection");
+    if (collectionParam && collections.length > 0) {
+      setSelectedCollection(collectionParam);
+    } else if (collections.length > 0 && !selectedCollection) {
+      setSelectedCollection(collections[0].id);
+    }
+  }, [collections, selectedCollection]);
+
   const fetchCollections = async () => {
     try {
-      const response = await fetch('/api/collections');
+      const response = await fetch("/api/collections");
       if (response.ok) {
         const data = await response.json();
         setCollections(data.collections || []);
-        if (data.collections && data.collections.length > 0) {
-          setSelectedCollection(data.collections[0].id);
-        }
       }
     } catch (error) {
-      console.error('Error fetching collections:', error);
+      console.error("Error fetching collections:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleUpdateProduct = async (updatedProduct: ProductItem) => {
+  const handleSaveProduct = async (product: ProductItem | Partial<ProductItem>) => {
+    if (!selectedCollection) {
+      alert("Please select a collection first");
+      return;
+    }
+
+    setSaving(true);
     try {
-      const updatedCollections = collections.map(collection => 
-        collection.id === selectedCollection 
-          ? {
-              ...collection,
-              items: collection.items.map(item =>
-                item.id === updatedProduct.id ? updatedProduct : item
-              )
-            }
-          : collection
-      );
+      const updatedCollections = collections.map((collection) => {
+        if (collection.id === selectedCollection) {
+          let updatedItems;
 
-      console.log('Sending update request:', { collections: updatedCollections });
+          if (editingProduct) {
+            // Update existing product
+            updatedItems = collection.items.map((item) => (item.id === editingProduct.id ? ({ ...product, id: editingProduct.id } as ProductItem) : item));
+          } else {
+            // Add new product
+            const newId = Date.now().toString();
+            const newProductItem = { ...product, id: newId } as ProductItem;
+            updatedItems = [...collection.items, newProductItem];
+          }
 
-      const response = await fetch('/api/collections', {
-        method: 'PUT',
+          return { ...collection, items: updatedItems };
+        }
+        return collection;
+      });
+
+      const response = await fetch("/api/collections", {
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ collections: updatedCollections }),
       });
 
-      console.log('Response status:', response.status);
-
       if (response.ok) {
         const result = await response.json();
-        console.log('Update result:', result);
         setCollections(result.collections);
         setEditingProduct(null);
-        alert('Product updated successfully!');
+        setShowAddForm(false);
+        resetForm();
+        alert(`Product ${editingProduct ? "updated" : "added"} successfully!`);
       } else {
         const error = await response.json();
-        console.error('Error response:', error);
-        alert(`Error updating product: ${error.error || 'Unknown error'}`);
+        alert(`Error saving product: ${error.error || "Unknown error"}`);
       }
     } catch (error) {
-      console.error('Error updating product:', error);
-      alert('Error updating product. Please try again.');
+      console.error("Error saving product:", error);
+      alert("Error saving product. Please try again.");
+    } finally {
+      setSaving(false);
     }
   };
 
-  const currentCollection = collections.find(col => col.id === selectedCollection);
+  const handleDeleteProduct = async (productId: string) => {
+    if (!confirm("Are you sure you want to delete this product? This action cannot be undone.")) {
+      return;
+    }
+
+    try {
+      const updatedCollections = collections.map((collection) => {
+        if (collection.id === selectedCollection) {
+          return {
+            ...collection,
+            items: collection.items.filter((item) => item.id !== productId),
+          };
+        }
+        return collection;
+      });
+
+      const response = await fetch("/api/collections", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ collections: updatedCollections }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setCollections(result.collections);
+        alert("Product deleted successfully!");
+      } else {
+        alert("Error deleting product");
+      }
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      alert("Error deleting product");
+    }
+  };
+
+  const resetForm = () => {
+    setNewProduct({
+      name: "",
+      image: "",
+      description: "",
+      category: "",
+      price: "",
+      available: true,
+      sizes: [],
+      materials: [],
+      features: [],
+      whatsappTemplate: "",
+    });
+  };
+
+  const currentCollection = collections.find((col) => col.id === selectedCollection);
 
   if (loading) {
     return (
@@ -107,268 +195,292 @@ export default function ProductManagement() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Breadcrumb
-        items={[
-          { label: 'Dashboard', href: '/admin/dashboard' },
-          { label: 'Product Management', href: '/admin/dashboard/products' }
+      {/* Admin Header */}
+      <AdminHeader
+        title="Product Management"
+        icon={
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4-8-4m16 0v10l-8 4-8-4V7" />
+          </svg>
+        }
+        gradientColors="from-green-600 to-green-800"
+        breadcrumbItems={[
+          { label: "Dashboard", href: "/admin/dashboard" },
+          { label: "Product Management", current: true },
         ]}
       />
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-[#921e27] to-[#7a1a21] p-6">
+      <div className="max-w-6xl mx-auto p-8">
+        <div className="bg-white rounded-lg shadow-sm border">
+          <div className="p-6 border-b">
             <div className="flex justify-between items-center">
-              <div>
-                <h1 className="text-2xl font-bold text-white">Product Management</h1>
-                <p className="text-white/80 mt-1">Manage product details and WhatsApp templates</p>
+              <div className="flex items-center space-x-4">
+                <h2 className="text-xl font-semibold">Products</h2>
+                {collections.length > 0 && (
+                  <select value={selectedCollection} onChange={(e) => setSelectedCollection(e.target.value)} className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent">
+                    <option value="">Select Collection</option>
+                    {collections.map((collection) => (
+                      <option key={collection.id} value={collection.id}>
+                        {collection.title}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
-              <select
-                value={selectedCollection}
-                onChange={(e) => setSelectedCollection(e.target.value)}
-                className="bg-white text-[#921e27] px-4 py-2 rounded-lg font-medium"
-              >
-                {collections.map(collection => (
-                  <option key={collection.id} value={collection.id}>
-                    {collection.name}
-                  </option>
-                ))}
-              </select>
+              {selectedCollection && (
+                <button onClick={() => setShowAddForm(true)} className="bg-gradient-to-r from-[#921e27] to-[#7a1a21] text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all">
+                  Add New Product
+                </button>
+              )}
             </div>
           </div>
 
-          {/* Products List */}
+          {/* Add/Edit Form */}
+          {(showAddForm || editingProduct) && selectedCollection && (
+            <div className="p-6 border-b bg-gray-50">
+              <h3 className="text-lg font-medium mb-4">{editingProduct ? "Edit Product" : "Add New Product"}</h3>
+              <ProductForm
+                product={editingProduct || newProduct}
+                onSave={handleSaveProduct}
+                onCancel={() => {
+                  setEditingProduct(null);
+                  setShowAddForm(false);
+                  resetForm();
+                }}
+                saving={saving}
+                collectionName={currentCollection?.title || ""}
+              />
+            </div>
+          )}
+
           <div className="p-6">
-            {currentCollection && currentCollection.items.length > 0 ? (
-              <div className="space-y-6">
+            {!selectedCollection ? (
+              <div className="text-center py-12">
+                <div className="text-gray-400 mb-4">
+                  <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Select a Collection</h3>
+                <p className="text-gray-500">Please select a collection to manage its products.</p>
+              </div>
+            ) : !currentCollection?.items || currentCollection.items.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-gray-400 mb-4">
+                  <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
+                <p className="text-gray-500 mb-4">Get started by adding your first product to this collection.</p>
+                <button onClick={() => setShowAddForm(true)} className="bg-gradient-to-r from-[#921e27] to-[#7a1a21] text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all">
+                  Add First Product
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-4">
                 {currentCollection.items.map((product) => (
-                  <div
-                    key={product.id}
-                    className="border border-gray-200 rounded-lg p-6 hover:shadow-sm transition-shadow"
-                  >
+                  <div key={product.id} className="border border-gray-200 rounded-lg p-4">
                     <div className="flex justify-between items-start">
                       <div className="flex space-x-4 flex-1">
-                        <Image
-                          src={product.image}
-                          alt={product.name}
-                          width={80}
-                          height={80}
-                          className="w-20 h-20 object-cover rounded-lg"
-                        />
+                        <div className="w-20 h-20 relative rounded-lg overflow-hidden">
+                          <Image src={product.image} alt={product.name} fill className="object-cover" />
+                        </div>
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                            {product.name}
-                          </h3>
-                          <p className="text-gray-600 mb-2">{product.price}</p>
-                          <p className="text-sm text-gray-500 line-clamp-2">
-                            {product.description}
-                          </p>
-                          <div className="mt-3">
-                            <p className="text-sm font-medium text-gray-700 mb-1">
-                              WhatsApp Template:
-                            </p>
-                            <p className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                              {product.whatsappTemplate || 'No template set'}
-                            </p>
+                          <div className="flex items-center space-x-2 mb-2">
+                            <h3 className="font-medium text-gray-900">{product.name}</h3>
+                            <span className={`px-2 py-1 text-xs rounded-full ${product.available ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>{product.available ? "Available" : "Unavailable"}</span>
+                          </div>
+                          <p className="text-gray-600 text-sm mb-2">{product.description}</p>
+                          <div className="flex items-center space-x-4 text-xs text-gray-500">
+                            <span>Price: {product.price}</span>
+                            <span>Category: {product.category}</span>
+                            {product.sizes && product.sizes.length > 0 && <span>Sizes: {product.sizes.join(", ")}</span>}
                           </div>
                         </div>
                       </div>
-                      <button
-                        onClick={() => setEditingProduct(product)}
-                        className="ml-4 px-4 py-2 bg-[#921e27] text-white rounded-lg hover:bg-[#7a1a21] transition-colors"
-                      >
-                        Edit
-                      </button>
+                      <div className="flex space-x-2 ml-4">
+                        <button onClick={() => setEditingProduct(product)} className="text-blue-600 hover:text-blue-800 transition-colors p-1" title="Edit Product">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                          </svg>
+                        </button>
+                        <button onClick={() => handleDeleteProduct(product.id)} className="text-red-600 hover:text-red-800 transition-colors p-1" title="Delete Product">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-gray-500">No products found in this collection.</p>
-              </div>
             )}
           </div>
         </div>
-
-        {/* Edit Modal */}
-        {editingProduct && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
-                <h2 className="text-xl font-bold mb-6">Edit Product</h2>
-                <ProductEditForm
-                  product={editingProduct}
-                  onSave={handleUpdateProduct}
-                  onCancel={() => setEditingProduct(null)}
-                />
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
 }
 
-interface ProductEditFormProps {
-  product: ProductItem;
-  onSave: (product: ProductItem) => Promise<void>;
+// Product Form Component
+function ProductForm({
+  product,
+  onSave,
+  onCancel,
+  saving,
+  collectionName,
+}: {
+  product: ProductItem | Partial<ProductItem>;
+  onSave: (product: ProductItem | Partial<ProductItem>) => void;
   onCancel: () => void;
-}
+  saving: boolean;
+  collectionName: string;
+}) {
+  const [formData, setFormData] = useState<Partial<ProductItem>>(product);
+  const [sizesInput, setSizesInput] = useState(product.sizes?.join(", ") || "");
+  const [materialsInput, setMaterialsInput] = useState(product.materials?.join(", ") || "");
+  const [featuresInput, setFeaturesInput] = useState(product.features?.join(", ") || "");
 
-function ProductEditForm({ product, onSave, onCancel }: ProductEditFormProps) {
-  const [formData, setFormData] = useState<ProductItem>(product);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate required fields
     if (!formData.name || !formData.price) {
-      alert('Please fill in all required fields (Name and Price)');
+      alert("Please fill in required fields (Name and Price)");
       return;
     }
-    
-    setIsSubmitting(true);
-    
-    try {
-      await onSave(formData);
-    } catch (error) {
-      console.error('Error saving product:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
+
+    // Parse comma-separated inputs
+    const finalData = {
+      ...formData,
+      sizes: sizesInput
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => s),
+      materials: materialsInput
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => s),
+      features: featuresInput
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => s),
+    };
+
+    onSave(finalData);
   };
 
-  const updateArrayField = (field: keyof ProductItem, value: string) => {
-    const array = value.split(',').map(item => item.trim()).filter(item => item);
-    setFormData({ ...formData, [field]: array });
+  const handleImageChange = (imageUrl: string) => {
+    setFormData({ ...formData, image: imageUrl });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Product Name
-        </label>
-        <input
-          type="text"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
-          required
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Product Name *</label>
+          <input
+            type="text"
+            value={formData.name || ""}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Price *</label>
+          <input
+            type="text"
+            value={formData.price || ""}
+            onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+            placeholder="e.g., Rp 150.000"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
+            required
+          />
+        </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Price
-        </label>
-        <input
-          type="text"
-          value={formData.price}
-          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
-          required
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Description
-        </label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
         <textarea
-          value={formData.description}
+          value={formData.description || ""}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          rows={4}
+          rows={3}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
-          required
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Sizes (comma separated)
-        </label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
         <input
           type="text"
-          value={formData.sizes?.join(', ') || ''}
-          onChange={(e) => updateArrayField('sizes', e.target.value)}
-          placeholder="S, M, L, XL"
+          value={formData.category || ""}
+          onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+          placeholder={`e.g., ${collectionName} Product`}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Materials (comma separated)
-        </label>
-        <input
-          type="text"
-          value={formData.materials?.join(', ') || ''}
-          onChange={(e) => updateArrayField('materials', e.target.value)}
-          placeholder="Cotton, Silk, Premium Fabric"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
-        />
+        <ImageUpload currentImage={formData.image} onImageChange={handleImageChange} folder="products" label="Product Image" />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Sizes (comma separated)</label>
+          <input
+            type="text"
+            value={sizesInput}
+            onChange={(e) => setSizesInput(e.target.value)}
+            placeholder="S, M, L, XL"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Materials (comma separated)</label>
+          <input
+            type="text"
+            value={materialsInput}
+            onChange={(e) => setMaterialsInput(e.target.value)}
+            placeholder="Cotton, Polyester"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Features (comma separated)</label>
+          <input
+            type="text"
+            value={featuresInput}
+            onChange={(e) => setFeaturesInput(e.target.value)}
+            placeholder="Comfortable, Durable"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
+          />
+        </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Features (comma separated)
-        </label>
-        <input
-          type="text"
-          value={formData.features?.join(', ') || ''}
-          onChange={(e) => updateArrayField('features', e.target.value)}
-          placeholder="Handmade, Premium Quality, Modern Design"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          WhatsApp Template Message
-        </label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">WhatsApp Template</label>
         <textarea
-          value={formData.whatsappTemplate || ''}
+          value={formData.whatsappTemplate || ""}
           onChange={(e) => setFormData({ ...formData, whatsappTemplate: e.target.value })}
           rows={3}
-          placeholder="Halo! Saya tertarik dengan *[Product Name]* ([Price]). Bisa info detail dan ketersediaan?"
+          placeholder="Halo, saya tertarik dengan produk {product_name}..."
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
         />
-        <p className="text-xs text-gray-500 mt-1">
-          Template will be used when customer clicks WhatsApp button
-        </p>
       </div>
 
       <div className="flex items-center">
-        <input
-          type="checkbox"
-          id="available"
-          checked={formData.available}
-          onChange={(e) => setFormData({ ...formData, available: e.target.checked })}
-          className="rounded border-gray-300 text-[#921e27] focus:ring-[#921e27]"
-        />
-        <label htmlFor="available" className="ml-2 text-sm text-gray-700">
-          Available for purchase
-        </label>
+        <input type="checkbox" checked={formData.available || false} onChange={(e) => setFormData({ ...formData, available: e.target.checked })} className="h-4 w-4 text-[#921e27] focus:ring-[#921e27] border-gray-300 rounded" />
+        <label className="ml-2 block text-sm text-gray-700">Product Available</label>
       </div>
 
-      <div className="flex space-x-3 pt-4">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="flex-1 bg-[#921e27] text-white py-3 rounded-lg hover:bg-[#7a1a21] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isSubmitting ? 'Saving...' : 'Save Changes'}
+      <div className="flex space-x-4">
+        <button type="submit" disabled={saving} className="bg-gradient-to-r from-[#921e27] to-[#7a1a21] text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all disabled:opacity-50">
+          {saving ? "Saving..." : "Save Product"}
         </button>
-        <button
-          type="button"
-          onClick={onCancel}
-          disabled={isSubmitting}
-          className="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50"
-        >
+        <button type="button" onClick={onCancel} disabled={saving} className="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition-all disabled:opacity-50">
           Cancel
         </button>
       </div>

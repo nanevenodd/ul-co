@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import Breadcrumb from '@/components/Breadcrumb';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import AdminHeader from "@/components/AdminHeader";
+import ImageUpload from "@/components/ImageUpload";
 
 interface Collection {
   id: string;
@@ -31,49 +32,50 @@ export default function CollectionsManagement() {
   const [loading, setLoading] = useState(true);
   const [editingCollection, setEditingCollection] = useState<Collection | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
-
-  // Dynamic breadcrumb based on state
-  const getBreadcrumbItems = () => {
-    if (editingCollection) {
-      return [
-        { label: 'Collections Management', href: '/admin/dashboard/collections' },
-        { label: `Edit ${editingCollection.title}`, current: true }
-      ];
-    }
-    if (showAddForm) {
-      return [
-        { label: 'Collections Management', href: '/admin/dashboard/collections' },
-        { label: 'Add New Collection', current: true }
-      ];
-    }
-    return [{ label: 'Collections Management', current: true }];
-  };
+  const [saving, setSaving] = useState(false);
+  const [newCollection, setNewCollection] = useState<Partial<Collection>>({
+    name: "",
+    title: "",
+    description: "",
+    category: "",
+    image: "",
+    color: "rose",
+    featured: false,
+    items: [],
+  });
 
   useEffect(() => {
+    document.title = "Collections - ULCO Admin";
     loadCollections();
   }, []);
 
   const loadCollections = async () => {
     try {
-      const response = await fetch('/api/collections');
+      const response = await fetch("/api/collections");
       const data = await response.json();
       setCollections(data.collections || []);
     } catch (error) {
-      console.error('Error loading collections:', error);
+      console.error("Error loading collections:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSave = async (collection: Collection) => {
+  const handleSave = async (collection: Collection | Partial<Collection>) => {
+    setSaving(true);
     try {
-      const url = '/api/collections';
-      const method = editingCollection ? 'PUT' : 'POST';
-      
+      const url = "/api/collections";
+      const method = editingCollection ? "PUT" : "POST";
+
+      // Generate ID for new collection
+      if (!editingCollection && !collection.id) {
+        collection.id = collection.name?.toLowerCase().replace(/[^a-z0-9]/g, "-") || "new-collection";
+      }
+
       const response = await fetch(url, {
         method,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(collection),
       });
@@ -82,178 +84,70 @@ export default function CollectionsManagement() {
         await loadCollections();
         setEditingCollection(null);
         setShowAddForm(false);
-        alert('Collection saved successfully!');
+        resetForm();
+        alert(`Collection ${editingCollection ? "updated" : "added"} successfully!`);
       } else {
-        alert('Failed to save collection');
+        alert("Error saving collection");
       }
     } catch (error) {
-      console.error('Error saving collection:', error);
-      alert('Error saving collection');
+      console.error("Error saving collection:", error);
+      alert("Error saving collection");
+    } finally {
+      setSaving(false);
     }
   };
 
-  const CollectionForm = ({ collection, onSave, onCancel }: {
-    collection?: Collection;
-    onSave: (collection: Collection) => void;
-    onCancel: () => void;
-  }) => {
-    const [formData, setFormData] = useState<Collection>(
-      collection || {
-        id: '',
-        name: '',
-        title: '',
-        description: '',
-        category: '',
-        image: '',
-        color: 'rose',
-        featured: false,
-        items: [],
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this collection? This action cannot be undone.")) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/collections", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        await loadCollections();
+        alert("Collection deleted successfully!");
+      } else {
+        alert("Error deleting collection");
       }
-    );
+    } catch (error) {
+      console.error("Error deleting collection:", error);
+      alert("Error deleting collection");
+    }
+  };
 
-    const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      onSave(formData);
-    };
-
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-lg max-w-2xl w-full max-h-screen overflow-y-auto">
-          <div className="p-6">
-            <h3 className="text-xl font-bold mb-4">
-              {collection ? 'Edit Collection' : 'Add New Collection'}
-            </h3>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Collection Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27]"
-                  placeholder="e.g., Marparbuei"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27]"
-                  placeholder="e.g., Marparbuei Collection"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Description
-                </label>
-                <textarea
-                  required
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  rows={3}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27]"
-                  placeholder="Collection description..."
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Category
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Color Theme
-                  </label>
-                  <select
-                    value={formData.color}
-                    onChange={(e) => setFormData({ ...formData, color: e.target.value })}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27]"
-                  >
-                    <option value="rose">Rose</option>
-                    <option value="blue">Blue</option>
-                    <option value="purple">Purple</option>
-                    <option value="amber">Amber</option>
-                    <option value="green">Green</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Image URL
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27]"
-                  placeholder="/image/collection.jpg"
-                />
-              </div>
-
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="featured"
-                  checked={formData.featured}
-                  onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                  className="mr-2"
-                />
-                <label htmlFor="featured" className="text-sm font-medium text-gray-700">
-                  Featured Collection
-                </label>
-              </div>
-
-              <div className="flex space-x-4 pt-4">
-                <button
-                  type="submit"
-                  className="bg-[#921e27] text-white px-6 py-2 rounded-lg hover:bg-[#7a1a21]"
-                >
-                  Save Collection
-                </button>
-                <button
-                  type="button"
-                  onClick={onCancel}
-                  className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
+  const resetForm = () => {
+    setNewCollection({
+      name: "",
+      title: "",
+      description: "",
+      category: "",
+      image: "",
+      color: "rose",
+      featured: false,
+      items: [],
+    });
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#921e27] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading collections...</p>
+      <div className="min-h-screen bg-gray-50 p-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded mb-6"></div>
+            <div className="space-y-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-32 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -261,111 +155,212 @@ export default function CollectionsManagement() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link href="/admin/dashboard" className="text-[#921e27] hover:text-[#7a1a21] mr-4">
-                ← Back to Dashboard
-              </Link>
-              <h1 className="text-2xl font-bold text-[#921e27]">Manage Collections</h1>
-            </div>
-            
-            <div className="flex items-center">
-              <button
-                onClick={() => setShowAddForm(true)}
-                className="bg-[#921e27] text-white px-4 py-2 rounded-lg hover:bg-[#7a1a21] transition-colors"
-              >
-                Add New Collection
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      {/* Admin Header */}
+      <AdminHeader
+        title="Collections Management"
+        icon={
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+        }
+        gradientColors="from-amber-600 to-amber-800"
+        breadcrumbItems={[
+          { label: "Dashboard", href: "/admin/dashboard" },
+          { label: "Collections Management", current: true },
+        ]}
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-32">
-        <Breadcrumb 
-          items={getBreadcrumbItems()} 
-          className="mb-8" 
-          showStats={!editingCollection && !showAddForm}
-          statsInfo={collections.length > 0 ? `${collections.length} collections` : 'No collections'}
-        />
-        
-        {collections.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No collections found</p>
-            <button
-              onClick={() => setShowAddForm(true)}
-              className="mt-4 bg-[#921e27] text-white px-6 py-3 rounded-lg hover:bg-[#7a1a21]"
-            >
-              Create Your First Collection
+      <div className="max-w-6xl mx-auto p-8">
+        <div className="bg-white rounded-lg shadow-sm border">
+          <div className="p-6 border-b flex justify-between items-center">
+            <h2 className="text-xl font-semibold">Collections</h2>
+            <button onClick={() => setShowAddForm(true)} className="bg-gradient-to-r from-[#921e27] to-[#7a1a21] text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all">
+              Add New Collection
             </button>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {collections.map((collection) => (
-              <div key={collection.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="relative h-48">
-                  <Image
-                    src={collection.image}
-                    alt={collection.name}
-                    fill
-                    className="object-cover"
-                  />
-                  {collection.featured && (
-                    <div className="absolute top-2 right-2 bg-[#921e27] text-white px-2 py-1 rounded text-xs">
-                      Featured
-                    </div>
-                  )}
-                </div>
-                
-                <div className="p-4">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{collection.title}</h3>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">{collection.description}</p>
-                  
-                  <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                    <span>{collection.category}</span>
-                    <span>{collection.items?.length || 0} items</span>
-                  </div>
 
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => setEditingCollection(collection)}
-                      className="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
-                    >
-                      Edit
-                    </button>
-                    <Link
-                      href={`/collection/${collection.id}`}
-                      target="_blank"
-                      className="flex-1 bg-gray-500 text-white py-2 rounded hover:bg-gray-600 transition-colors text-center"
-                    >
-                      View
-                    </Link>
-                  </div>
+          {/* Add/Edit Form */}
+          {(showAddForm || editingCollection) && (
+            <div className="p-6 border-b bg-gray-50">
+              <h3 className="text-lg font-medium mb-4">{editingCollection ? "Edit Collection" : "Add New Collection"}</h3>
+              <CollectionForm
+                collection={editingCollection || newCollection}
+                onSave={handleSave}
+                onCancel={() => {
+                  setEditingCollection(null);
+                  setShowAddForm(false);
+                  resetForm();
+                }}
+                saving={saving}
+              />
+            </div>
+          )}
+
+          <div className="p-6">
+            {collections.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-gray-400 mb-4">
+                  <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1}
+                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                    />
+                  </svg>
                 </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No collections found</h3>
+                <p className="text-gray-500 mb-4">Get started by adding your first collection.</p>
+                <button onClick={() => setShowAddForm(true)} className="bg-gradient-to-r from-[#921e27] to-[#7a1a21] text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all">
+                  Add First Collection
+                </button>
               </div>
-            ))}
+            ) : (
+              <div className="space-y-4">
+                {collections.map((collection) => (
+                  <div key={collection.id} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex justify-between items-start">
+                      <div className="flex space-x-4 flex-1">
+                        <div className="w-20 h-20 relative rounded-lg overflow-hidden">
+                          <Image src={collection.image} alt={collection.name} fill className="object-cover" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-2 mb-2">
+                            <h3 className="font-medium text-gray-900">{collection.title}</h3>
+                            <span className={`px-2 py-1 text-xs rounded-full ${collection.featured ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}>{collection.featured ? "Featured" : "Standard"}</span>
+                          </div>
+                          <p className="text-gray-600 text-sm mb-2">{collection.description}</p>
+                          <div className="flex items-center space-x-4 text-xs text-gray-500">
+                            <span>Category: {collection.category}</span>
+                            <span>{collection.items?.length || 0} items</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex space-x-2 ml-4">
+                        <Link href={`/admin/dashboard/products?collection=${collection.id}`} className="text-blue-600 hover:text-blue-800 transition-colors p-1" title="Manage Products">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                          </svg>
+                        </Link>
+                        <button onClick={() => setEditingCollection(collection)} className="text-blue-600 hover:text-blue-800 transition-colors p-1" title="Edit Collection">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                          </svg>
+                        </button>
+                        <button onClick={() => handleDelete(collection.id)} className="text-red-600 hover:text-red-800 transition-colors p-1" title="Delete Collection">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Collection Form Component
+function CollectionForm({ collection, onSave, onCancel, saving }: { collection: Collection | Partial<Collection>; onSave: (collection: Collection | Partial<Collection>) => void; onCancel: () => void; saving: boolean }) {
+  const [formData, setFormData] = useState<Partial<Collection>>(collection);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.title) {
+      alert("Please fill in required fields (Name and Title)");
+      return;
+    }
+    onSave(formData);
+  };
+
+  const handleImageChange = (imageUrl: string) => {
+    setFormData({ ...formData, image: imageUrl });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Name *</label>
+          <input
+            type="text"
+            value={formData.name || ""}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Title *</label>
+          <input
+            type="text"
+            value={formData.title || ""}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
+            required
+          />
+        </div>
       </div>
 
-      {/* Forms */}
-      {showAddForm && (
-        <CollectionForm
-          onSave={handleSave}
-          onCancel={() => setShowAddForm(false)}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+        <textarea
+          value={formData.description || ""}
+          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          rows={3}
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
         />
-      )}
+      </div>
 
-      {editingCollection && (
-        <CollectionForm
-          collection={editingCollection}
-          onSave={handleSave}
-          onCancel={() => setEditingCollection(null)}
-        />
-      )}
-    </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+          <input
+            type="text"
+            value={formData.category || ""}
+            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Color Theme</label>
+          <select
+            value={formData.color || "rose"}
+            onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#921e27] focus:border-transparent">
+            <option value="rose">Rose</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="purple">Purple</option>
+            <option value="yellow">Yellow</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <ImageUpload currentImage={formData.image} onImageChange={handleImageChange} folder="collections" label="Collection Image" />
+      </div>
+
+      <div className="flex items-center">
+        <input type="checkbox" checked={formData.featured || false} onChange={(e) => setFormData({ ...formData, featured: e.target.checked })} className="h-4 w-4 text-[#921e27] focus:ring-[#921e27] border-gray-300 rounded" />
+        <label className="ml-2 block text-sm text-gray-700">Featured Collection</label>
+      </div>
+
+      <div className="flex space-x-4">
+        <button type="submit" disabled={saving} className="bg-gradient-to-r from-[#921e27] to-[#7a1a21] text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all disabled:opacity-50">
+          {saving ? "Saving..." : "Save Collection"}
+        </button>
+        <button type="button" onClick={onCancel} disabled={saving} className="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition-all disabled:opacity-50">
+          Cancel
+        </button>
+      </div>
+    </form>
   );
 }

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import DarkBreadcrumb from '@/components/DarkBreadcrumb';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import DarkBreadcrumb from "@/components/DarkBreadcrumb";
 
 interface ProductItem {
   id: number;
@@ -33,18 +33,18 @@ interface ProductDetailPageProps {
 export default function ProductDetailPage({ collectionId }: ProductDetailPageProps) {
   const [collection, setCollection] = useState<Collection | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string>('');
-  const [selectedSize, setSelectedSize] = useState<string>('');
+  const [selectedImage, setSelectedImage] = useState<string>("");
+  const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
   const [loading, setLoading] = useState(true);
 
   // WhatsApp contact number
-  const whatsappNumber = '6283126066671';
+  const whatsappNumber = "6283126066671";
 
   useEffect(() => {
     const fetchCollection = async () => {
       try {
-        const response = await fetch('/api/collections');
+        const response = await fetch("/api/collections");
         if (response.ok) {
           const data = await response.json();
           const foundCollection = data.collections.find((col: Collection) => col.id === collectionId);
@@ -57,7 +57,7 @@ export default function ProductDetailPage({ collectionId }: ProductDetailPagePro
           }
         }
       } catch (error) {
-        console.error('Error fetching collection:', error);
+        console.error("Error fetching collection:", error);
       } finally {
         setLoading(false);
       }
@@ -69,28 +69,27 @@ export default function ProductDetailPage({ collectionId }: ProductDetailPagePro
   const handleProductSelect = (product: ProductItem) => {
     setSelectedProduct(product);
     setSelectedImage(product.image);
-    setSelectedSize('');
+    setSelectedSize("");
     setQuantity(1);
   };
 
   const handleWhatsAppOrder = () => {
     if (!selectedProduct) return;
 
-    let message = selectedProduct.whatsappTemplate || 
-      `Halo! Saya tertarik dengan *${selectedProduct.name}* (${selectedProduct.price}).`;
-    
+    let message = selectedProduct.whatsappTemplate || `Halo! Saya tertarik dengan *${selectedProduct.name}* (${selectedProduct.price}).`;
+
     if (selectedSize) {
       message += ` Ukuran: ${selectedSize}.`;
     }
-    
+
     if (quantity > 1) {
       message += ` Quantity: ${quantity}.`;
     }
-    
-    message += ' Bisa info detail dan ketersediaan?';
+
+    message += " Bisa info detail dan ketersediaan?";
 
     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappURL, '_blank');
+    window.open(whatsappURL, "_blank");
   };
 
   if (loading) {
@@ -120,9 +119,9 @@ export default function ProductDetailPage({ collectionId }: ProductDetailPagePro
       {/* Breadcrumb */}
       <DarkBreadcrumb
         items={[
-          { label: 'Home', href: '/' },
-          { label: 'Collections', href: '/portfolio' },
-          { label: collection.name, href: `/collection/${collection.id}` }
+          { label: "Home", href: "/" },
+          { label: "Collections", href: "/portfolio" },
+          { label: collection.name, href: `/collection/${collection.id}` },
         ]}
       />
 
@@ -132,15 +131,9 @@ export default function ProductDetailPage({ collectionId }: ProductDetailPagePro
           <div className="space-y-6">
             {/* Main Image */}
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10">
-              <Image
-                src={selectedImage}
-                alt={selectedProduct.name}
-                fill
-                className="object-cover"
-                priority
-              />
+              <Image src={selectedImage} alt={selectedProduct.name} fill className="object-cover" priority />
             </div>
-            
+
             {/* Thumbnail Images */}
             {collection.items.length > 1 && (
               <div className="grid grid-cols-3 gap-4">
@@ -148,18 +141,8 @@ export default function ProductDetailPage({ collectionId }: ProductDetailPagePro
                   <button
                     key={item.id}
                     onClick={() => handleProductSelect(item)}
-                    className={`relative aspect-square rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
-                      selectedProduct.id === item.id
-                        ? 'border-[#921e27] scale-105'
-                        : 'border-white/20 hover:border-white/40'
-                    }`}
-                  >
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      className="object-cover"
-                    />
+                    className={`relative aspect-square rounded-2xl overflow-hidden border-2 transition-all duration-300 ${selectedProduct.id === item.id ? "border-[#921e27] scale-105" : "border-white/20 hover:border-white/40"}`}>
+                    <Image src={item.image} alt={item.name} fill className="object-cover" />
                   </button>
                 ))}
               </div>
@@ -171,27 +154,15 @@ export default function ProductDetailPage({ collectionId }: ProductDetailPagePro
             {/* Product Info */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <span className="px-3 py-1 bg-[#921e27]/20 text-[#921e27] rounded-full text-sm font-medium border border-[#921e27]/30">
-                  {collection.name}
-                </span>
-                {selectedProduct.available && (
-                  <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium border border-green-500/30">
-                    Available
-                  </span>
-                )}
+                <span className="px-3 py-1 bg-[#921e27]/20 text-[#921e27] rounded-full text-sm font-medium border border-[#921e27]/30">{collection.name}</span>
+                {selectedProduct.available && <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium border border-green-500/30">Available</span>}
               </div>
-              
-              <h1 className="text-4xl font-bold text-white leading-tight">
-                {selectedProduct.name}
-              </h1>
-              
-              <div className="text-3xl font-bold text-[#921e27]">
-                {selectedProduct.price}
-              </div>
-              
-              <p className="text-gray-300 leading-relaxed text-lg">
-                {selectedProduct.description}
-              </p>
+
+              <h1 className="text-4xl font-bold text-white leading-tight">{selectedProduct.name}</h1>
+
+              <div className="text-3xl font-bold text-[#921e27]">{selectedProduct.price}</div>
+
+              <p className="text-gray-300 leading-relaxed text-lg">{selectedProduct.description}</p>
             </div>
 
             {/* Size Selection */}
@@ -203,12 +174,7 @@ export default function ProductDetailPage({ collectionId }: ProductDetailPagePro
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`w-12 h-12 rounded-xl border-2 font-semibold transition-all duration-300 ${
-                        selectedSize === size
-                          ? 'border-[#921e27] bg-[#921e27] text-white'
-                          : 'border-white/30 text-white hover:border-[#921e27]/50'
-                      }`}
-                    >
+                      className={`w-12 h-12 rounded-xl border-2 font-semibold transition-all duration-300 ${selectedSize === size ? "border-[#921e27] bg-[#921e27] text-white" : "border-white/30 text-white hover:border-[#921e27]/50"}`}>
                       {size}
                     </button>
                   ))}
@@ -220,19 +186,11 @@ export default function ProductDetailPage({ collectionId }: ProductDetailPagePro
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-white">Quantity</h3>
               <div className="flex items-center space-x-4">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-12 h-12 rounded-xl border border-white/30 text-white hover:border-[#921e27]/50 transition-colors flex items-center justify-center"
-                >
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-12 h-12 rounded-xl border border-white/30 text-white hover:border-[#921e27]/50 transition-colors flex items-center justify-center">
                   -
                 </button>
-                <span className="text-2xl font-semibold text-white w-12 text-center">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="w-12 h-12 rounded-xl border border-white/30 text-white hover:border-[#921e27]/50 transition-colors flex items-center justify-center"
-                >
+                <span className="text-2xl font-semibold text-white w-12 text-center">{quantity}</span>
+                <button onClick={() => setQuantity(quantity + 1)} className="w-12 h-12 rounded-xl border border-white/30 text-white hover:border-[#921e27]/50 transition-colors flex items-center justify-center">
                   +
                 </button>
               </div>
@@ -241,10 +199,9 @@ export default function ProductDetailPage({ collectionId }: ProductDetailPagePro
             {/* WhatsApp Order Button */}
             <button
               onClick={handleWhatsAppOrder}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3"
-            >
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3">
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
               </svg>
               <span>Order via WhatsApp</span>
             </button>
@@ -283,32 +240,20 @@ export default function ProductDetailPage({ collectionId }: ProductDetailPagePro
         {/* Other Products in Collection */}
         {collection.items.length > 1 && (
           <div className="mt-16">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">
-              Other Items in {collection.name}
-            </h2>
+            <h2 className="text-3xl font-bold text-white mb-8 text-center">Other Items in {collection.name}</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {collection.items
-                .filter(item => item.id !== selectedProduct.id)
+                .filter((item) => item.id !== selectedProduct.id)
                 .map((item) => (
                   <button
                     key={item.id}
                     onClick={() => handleProductSelect(item)}
-                    className="group bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-[#921e27]/50 transition-all duration-300 transform hover:scale-105"
-                  >
+                    className="group bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-[#921e27]/50 transition-all duration-300 transform hover:scale-105">
                     <div className="relative aspect-[4/5] rounded-xl overflow-hidden mb-4">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
+                      <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-110 transition-transform duration-300" />
                     </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">
-                      {item.name}
-                    </h3>
-                    <p className="text-[#921e27] font-bold">
-                      {item.price}
-                    </p>
+                    <h3 className="text-lg font-semibold text-white mb-2">{item.name}</h3>
+                    <p className="text-[#921e27] font-bold">{item.price}</p>
                   </button>
                 ))}
             </div>

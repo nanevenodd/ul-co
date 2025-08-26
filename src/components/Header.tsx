@@ -35,7 +35,7 @@ const Header = () => {
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex space-x-8 items-center">
-          {["Home", "Portfolio", "About"].map((label) => (
+          {["Home", "Portfolio", "About", "FAQ"].map((label) => (
             <Link key={label} href={`/${label.toLowerCase() === "home" ? "" : label.toLowerCase()}`} className="relative group font-light transition-colors duration-300 hover:text-[#fbeaec]">
               {label}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#fbeaec] group-hover:w-full transition-all duration-300"></span>
@@ -47,11 +47,14 @@ const Header = () => {
         </nav>
 
         {/* Mobile Menu Button */}
-        <button className="md:hidden z-50 relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#fbeaec]/20 transition-all duration-300" onClick={toggleMenu} aria-label="Toggle menu">
+        <button
+          className={`md:hidden z-50 relative w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 ${scrolled ? "bg-white/10 hover:bg-white/20 backdrop-blur-sm" : "bg-white/10 hover:bg-white/20"}`}
+          onClick={toggleMenu}
+          aria-label="Toggle menu">
           <div className="w-6 h-6 relative flex flex-col justify-center items-center">
-            <span className={`block absolute h-0.5 w-6 bg-current transform transition-all duration-300 ${isMenuOpen ? "rotate-45" : "-translate-y-1.5"}`} />
-            <span className={`block absolute h-0.5 w-6 bg-current transform transition-all duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100"}`} />
-            <span className={`block absolute h-0.5 w-6 bg-current transform transition-all duration-300 ${isMenuOpen ? "-rotate-45" : "translate-y-1.5"}`} />
+            <span className={`block absolute h-0.5 w-6 transition-all duration-300 ${scrolled ? "bg-[#5e0e15]" : "bg-white"} ${isMenuOpen ? "rotate-45" : "-translate-y-1.5"}`} />
+            <span className={`block absolute h-0.5 w-6 transition-all duration-300 ${scrolled ? "bg-[#5e0e15]" : "bg-white"} ${isMenuOpen ? "opacity-0" : "opacity-100"}`} />
+            <span className={`block absolute h-0.5 w-6 transition-all duration-300 ${scrolled ? "bg-[#5e0e15]" : "bg-white"} ${isMenuOpen ? "-rotate-45" : "translate-y-1.5"}`} />
           </div>
         </button>
 
@@ -60,7 +63,7 @@ const Header = () => {
           <div className="absolute inset-0 bg-[#921e27]"></div>
 
           <div className="relative z-10 flex flex-col items-center justify-center h-full space-y-8">
-            {["Home", "Portfolio", "About", "Contact"].map((label, index) => (
+            {["Home", "Portfolio", "About", "FAQ", "Contact"].map((label, index) => (
               <Link
                 key={label}
                 href={`/${label.toLowerCase() === "home" ? "" : label.toLowerCase()}`}

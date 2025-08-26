@@ -18,7 +18,7 @@ const portfolioItems = [
   },
   {
     title: "Butet",
-    category: "Butet Collection", 
+    category: "Butet Collection",
     description: "Koleksi terbaru dari UL.CO yang memadukan kekuatan perempuan dengan keindahan kain ulos pucca.",
     image: "/image/butet.jpg",
     color: "blue",
@@ -31,7 +31,7 @@ const portfolioItems = [
     category: "Koleksi Aksesoris",
     description: "Koleksi aksesoris eksklusif dengan konsep zero waste yang menciptakan karya unik dari sisa produksi.",
     image: "/image/aksesoris.jpeg",
-    color: "purple", 
+    color: "purple",
     slug: "aksesoris",
     featured: false,
     year: "2024",
@@ -41,7 +41,7 @@ const portfolioItems = [
 const getColorClasses = (color: string) => {
   const colorMap = {
     rose: "from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700",
-    blue: "from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700", 
+    blue: "from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700",
     purple: "from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700",
     amber: "from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700",
     gray: "from-gray-600 to-gray-800 hover:from-gray-700 hover:to-gray-900",
@@ -54,19 +54,14 @@ const PortfolioPage = () => {
   const [activeFilter, setActiveFilter] = useState("All Collections");
   const [filteredItems, setFilteredItems] = useState(portfolioItems);
 
-  const filterOptions = [
-    "All Collections", 
-    "Marparbuei", 
-    "Butet", 
-    "Aksesoris"
-  ];
+  const filterOptions = ["All Collections", "Marparbuei", "Butet", "Aksesoris"];
 
   const handleFilter = (filter: string) => {
     setActiveFilter(filter);
     if (filter === "All Collections") {
       setFilteredItems(portfolioItems);
     } else {
-      setFilteredItems(portfolioItems.filter(item => item.title === filter));
+      setFilteredItems(portfolioItems.filter((item) => item.title === filter));
     }
   };
   return (
@@ -80,8 +75,8 @@ const PortfolioPage = () => {
         </div>
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          <PublicBreadcrumb items={[{ label: 'Portfolio', current: true }]} className="max-w-4xl mx-auto mb-8" />
-          
+          <PublicBreadcrumb items={[{ label: "Portfolio", current: true }]} className="max-w-4xl mx-auto mb-8" />
+
           <div className="animate-fade-in">
             <h1 className="text-5xl md:text-4xl font-extralight leading-tight mb-8 tracking-wide text-white">
               Halo Dongan
@@ -111,11 +106,8 @@ const PortfolioPage = () => {
                 key={option}
                 onClick={() => handleFilter(option)}
                 className={`px-6 py-2 rounded-full font-medium transition-all duration-300 hover:scale-105 shadow-lg ${
-                  activeFilter === option
-                    ? "bg-[#921e27] text-white"
-                    : "bg-white border-2 border-gray-200 text-gray-700 hover:border-[#921e27] hover:text-[#921e27]"
-                }`}
-              >
+                  activeFilter === option ? "bg-[#921e27] text-white" : "bg-white border-2 border-gray-200 text-gray-700 hover:border-[#921e27] hover:text-[#921e27]"
+                }`}>
                 {option}
               </button>
             ))}
