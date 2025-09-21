@@ -55,8 +55,16 @@ export async function POST(request: NextRequest) {
     data.collections = data.collections || {};
     data.collections[newId] = newCollection;
 
-    // Save updated content
-    await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
+    // Save updated content - Add Vercel error handling
+    try {
+      await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
+    } catch (writeError) {
+      console.error("File write error (Vercel filesystem is readonly):", writeError);
+      return NextResponse.json({ 
+        error: "Database write failed. This is a known Vercel limitation. Please use a database instead of file storage for production.",
+        details: "Vercel serverless functions have read-only filesystem. Consider using Vercel KV, PostgreSQL, or another database solution."
+      }, { status: 500 });
+    }
 
     return NextResponse.json({
       message: "Collection created successfully",
@@ -74,6 +82,15 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error creating collection:", error);
+    
+    // Check if it's a filesystem permission error
+    if (error instanceof Error && error.message.includes('EROFS')) {
+      return NextResponse.json({ 
+        error: "Read-only filesystem error on Vercel. File writes are not supported in production.",
+        solution: "Please set up a database (PostgreSQL, MongoDB, etc.) instead of file-based storage."
+      }, { status: 500 });
+    }
+    
     return NextResponse.json({ error: "Failed to create collection" }, { status: 500 });
   }
 }
@@ -100,8 +117,16 @@ export async function PUT(request: NextRequest) {
       image: coverImage || data.collections[id].image,
     };
 
-    // Save updated content
-    await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
+    // Save updated content - Add Vercel error handling
+    try {
+      await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
+    } catch (writeError) {
+      console.error("File write error (Vercel filesystem is readonly):", writeError);
+      return NextResponse.json({ 
+        error: "Database write failed. This is a known Vercel limitation. Please use a database instead of file storage for production.",
+        details: "Vercel serverless functions have read-only filesystem. Consider using Vercel KV, PostgreSQL, or another database solution."
+      }, { status: 500 });
+    }
 
     return NextResponse.json({
       message: "Collection updated successfully",
@@ -119,6 +144,15 @@ export async function PUT(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error updating collection:", error);
+    
+    // Check if it's a filesystem permission error
+    if (error instanceof Error && error.message.includes('EROFS')) {
+      return NextResponse.json({ 
+        error: "Read-only filesystem error on Vercel. File writes are not supported in production.",
+        solution: "Please set up a database (PostgreSQL, MongoDB, etc.) instead of file-based storage."
+      }, { status: 500 });
+    }
+    
     return NextResponse.json({ error: "Failed to update collection" }, { status: 500 });
   }
 }
@@ -144,12 +178,29 @@ export async function DELETE(request: NextRequest) {
     // Delete collection
     delete data.collections[id];
 
-    // Save updated content
-    await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
+    // Save updated content - Add Vercel error handling
+    try {
+      await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
+    } catch (writeError) {
+      console.error("File write error (Vercel filesystem is readonly):", writeError);
+      return NextResponse.json({ 
+        error: "Database write failed. This is a known Vercel limitation. Please use a database instead of file storage for production.",
+        details: "Vercel serverless functions have read-only filesystem. Consider using Vercel KV, PostgreSQL, or another database solution."
+      }, { status: 500 });
+    }
 
     return NextResponse.json({ message: "Collection deleted successfully" });
   } catch (error) {
     console.error("Error deleting collection:", error);
+    
+    // Check if it's a filesystem permission error
+    if (error instanceof Error && error.message.includes('EROFS')) {
+      return NextResponse.json({ 
+        error: "Read-only filesystem error on Vercel. File writes are not supported in production.",
+        solution: "Please set up a database (PostgreSQL, MongoDB, etc.) instead of file-based storage."
+      }, { status: 500 });
+    }
+    
     return NextResponse.json({ error: "Failed to delete collection" }, { status: 500 });
   }
 }

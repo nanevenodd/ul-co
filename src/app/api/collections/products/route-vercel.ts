@@ -1,44 +1,69 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
 
-const contentFilePath = path.join(process.cwd(), "src", "data", "content.json");
+// Temporary in-memory storage for Vercel compatibility
+// In production, this should be replaced with a real database
+let contentData: any = null;
+
+// Initialize with default data
+const initializeData = () => {
+  if (!contentData) {
+    contentData = {
+      hero: {
+        title: "UL.CO Portfolio",
+        subtitle: "Fashion berbasis kain ulos",
+        backgroundImage: "/uploads/hero-1758391109645.jpg"
+      },
+      designPhilosophy: {
+        title: "Design Philosophy",
+        content: "Our design philosophy centers on...",
+        backgroundImage: "/philosophy-bg.jpg"
+      },
+      collections: {
+        marparbuei: {
+          id: "marparbuei",
+          name: "Marparbuei",
+          description: "Koleksi tradisional dengan sentuhan modern",
+          image: "/uploads/hero-1758413922506.jpg",
+          products: []
+        },
+        butet: {
+          id: "butet",
+          name: "Butet",
+          description: "Elegan dan mewah dengan detail ulos yang memukau",
+          image: "/uploads/hero-1758416053264.jpg",
+          products: []
+        },
+        aksesoris: {
+          id: "aksesoris",
+          name: "Aksesoris",
+          description: "Aksesoris fashion dengan sentuhan ulos",
+          image: "/uploads/hero-1758414986583.jpg",
+          products: []
+        }
+      }
+    };
+  }
+  return contentData;
+};
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const collectionId = searchParams.get("collectionId");
 
-    const fileContents = await fs.readFile(contentFilePath, "utf8");
-    const data = JSON.parse(fileContents);
+    const data = initializeData();
 
     if (collectionId) {
-      // Return products for specific collection
-      const collection = data.collections?.[collectionId];
+      const collection = data.collections[collectionId];
       if (!collection) {
         return NextResponse.json({ error: "Collection not found" }, { status: 404 });
       }
       return NextResponse.json({ products: collection.products || [] });
     }
 
-    // Return all products from all collections
-    const allProducts = [];
-    if (data.collections) {
-      for (const [collectionId, collection] of Object.entries(data.collections)) {
-        const products = (collection as any).products || [];
-        allProducts.push(
-          ...products.map((product: any) => ({
-            ...product,
-            collectionId,
-            collectionName: (collection as any).name,
-          }))
-        );
-      }
-    }
-
-    return NextResponse.json({ products: allProducts });
+    return NextResponse.json({ collections: data.collections });
   } catch (error) {
-    console.error("Error reading products:", error);
+    console.error("Error fetching products:", error);
     return NextResponse.json({ error: "Failed to fetch products" }, { status: 500 });
   }
 }
@@ -52,29 +77,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Collection ID is required" }, { status: 400 });
     }
 
-    // Read current content
-    const fileContents = await fs.readFile(contentFilePath, "utf8");
-    const data = JSON.parse(fileContents);
+    const data = initializeData();
 
-    // Check if collection exists
     if (!data.collections || !data.collections[collectionId]) {
       return NextResponse.json({ error: "Collection not found" }, { status: 404 });
     }
 
     // Generate new product ID
     const existingProducts = data.collections[collectionId].products || [];
-    const maxId =
-      existingProducts.length > 0
-        ? Math.max(
-            ...existingProducts.map((p: any) => {
-              const idNum = parseInt(p.id.slice(2)); // Remove first 2 chars (e.g., "mp" from "mp001")
-              return isNaN(idNum) ? 0 : idNum;
-            })
-          )
-        : 0;
+    const maxId = existingProducts.length > 0
+      ? Math.max(...existingProducts.map((p: any) => {
+          const idNum = parseInt(p.id.slice(2));
+          return isNaN(idNum) ? 0 : idNum;
+        }))
+      : 0;
 
     const newIdNum = (maxId + 1).toString().padStart(3, "0");
-    const collectionPrefix = collectionId.slice(0, 2); // First 2 characters of collection id
+    const collectionPrefix = collectionId.slice(0, 2);
     const newId = `${collectionPrefix}${newIdNum}`;
 
     // Create new product
@@ -93,32 +112,12 @@ export async function POST(request: NextRequest) {
     // Add product to collection
     data.collections[collectionId].products = [...existingProducts, newProduct];
 
-    // Save updated content - Add Vercel error handling
-    try {
-      await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
-    } catch (writeError) {
-      console.error("File write error (Vercel filesystem is readonly):", writeError);
-      return NextResponse.json({ 
-        error: "Database write failed. This is a known Vercel limitation. Please use a database instead of file storage for production.",
-        details: "Vercel serverless functions have read-only filesystem. Consider using Vercel KV, PostgreSQL, or another database solution."
-      }, { status: 500 });
-    }
-
     return NextResponse.json({
       message: "Product created successfully",
       product: newProduct,
     });
   } catch (error) {
     console.error("Error creating product:", error);
-    
-    // Check if it's a filesystem permission error
-    if (error instanceof Error && error.message.includes('EROFS')) {
-      return NextResponse.json({ 
-        error: "Read-only filesystem error on Vercel. File writes are not supported in production.",
-        solution: "Please set up a database (PostgreSQL, MongoDB, etc.) instead of file-based storage."
-      }, { status: 500 });
-    }
-    
     return NextResponse.json({ error: "Failed to create product" }, { status: 500 });
   }
 }
@@ -132,11 +131,8 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: "Collection ID and Product ID are required" }, { status: 400 });
     }
 
-    // Read current content
-    const fileContents = await fs.readFile(contentFilePath, "utf8");
-    const data = JSON.parse(fileContents);
+    const data = initializeData();
 
-    // Check if collection exists
     if (!data.collections || !data.collections[collectionId]) {
       return NextResponse.json({ error: "Collection not found" }, { status: 404 });
     }
@@ -164,32 +160,12 @@ export async function PUT(request: NextRequest) {
 
     data.collections[collectionId].products[productIndex] = updatedProduct;
 
-    // Save updated content - Add Vercel error handling
-    try {
-      await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
-    } catch (writeError) {
-      console.error("File write error (Vercel filesystem is readonly):", writeError);
-      return NextResponse.json({ 
-        error: "Database write failed. This is a known Vercel limitation. Please use a database instead of file storage for production.",
-        details: "Vercel serverless functions have read-only filesystem. Consider using Vercel KV, PostgreSQL, or another database solution."
-      }, { status: 500 });
-    }
-
     return NextResponse.json({
       message: "Product updated successfully",
       product: updatedProduct,
     });
   } catch (error) {
     console.error("Error updating product:", error);
-    
-    // Check if it's a filesystem permission error
-    if (error instanceof Error && error.message.includes('EROFS')) {
-      return NextResponse.json({ 
-        error: "Read-only filesystem error on Vercel. File writes are not supported in production.",
-        solution: "Please set up a database (PostgreSQL, MongoDB, etc.) instead of file-based storage."
-      }, { status: 500 });
-    }
-    
     return NextResponse.json({ error: "Failed to update product" }, { status: 500 });
   }
 }
@@ -204,11 +180,8 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "Collection ID and Product ID are required" }, { status: 400 });
     }
 
-    // Read current content
-    const fileContents = await fs.readFile(contentFilePath, "utf8");
-    const data = JSON.parse(fileContents);
+    const data = initializeData();
 
-    // Check if collection exists
     if (!data.collections || !data.collections[collectionId]) {
       return NextResponse.json({ error: "Collection not found" }, { status: 404 });
     }
@@ -223,29 +196,9 @@ export async function DELETE(request: NextRequest) {
 
     data.collections[collectionId].products = updatedProducts;
 
-    // Save updated content - Add error handling for Vercel
-    try {
-      await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
-    } catch (writeError) {
-      console.error("File write error (Vercel filesystem is readonly):", writeError);
-      return NextResponse.json({ 
-        error: "Database write failed. This is a known Vercel limitation. Please use a database instead of file storage for production.",
-        details: "Vercel serverless functions have read-only filesystem. Consider using Vercel KV, PostgreSQL, or another database solution."
-      }, { status: 500 });
-    }
-
     return NextResponse.json({ message: "Product deleted successfully" });
   } catch (error) {
     console.error("Error deleting product:", error);
-    
-    // Check if it's a filesystem permission error
-    if (error instanceof Error && error.message.includes('EROFS')) {
-      return NextResponse.json({ 
-        error: "Read-only filesystem error on Vercel. File writes are not supported in production.",
-        solution: "Please set up a database (PostgreSQL, MongoDB, etc.) instead of file-based storage."
-      }, { status: 500 });
-    }
-    
     return NextResponse.json({ error: "Failed to delete product" }, { status: 500 });
   }
 }
