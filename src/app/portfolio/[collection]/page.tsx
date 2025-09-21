@@ -97,9 +97,6 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
         {(collection.coverImage || collection.image) && (
           <div className="mb-12 relative h-64 md:h-96 rounded-lg overflow-hidden">
             <Image src={collection.coverImage || collection.image} alt={collection.title || collection.name} fill className="object-cover" />
-            <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-              <h2 className="text-white text-3xl md:text-5xl font-bold">{collection.title || collection.name}</h2>
-            </div>
           </div>
         )}
 

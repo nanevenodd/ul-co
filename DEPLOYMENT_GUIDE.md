@@ -10,18 +10,20 @@ Untuk men-deploy ke Vercel, Anda harus mengatur environment variables berikut di
    ```
    xzEYWaikcfhmK8bn+yUifBU5MFV8NG7uXI9oEG7egaE=
    ```
-   
 2. **NEXTAUTH_URL** (akan otomatis di-set Vercel, tapi bisa manual juga)
+
    ```
    https://ul-co.vercel.app
    ```
 
 3. **ADMIN_EMAIL**
+
    ```
    admin@ulco.com
    ```
 
 4. **ADMIN_PASSWORD**
+
    ```
    admin123
    ```
@@ -34,6 +36,7 @@ Untuk men-deploy ke Vercel, Anda harus mengatur environment variables berikut di
 ## 🔧 Cara Setting di Vercel
 
 ### Method 1: Via Vercel Dashboard
+
 1. Buka https://vercel.com/dashboard
 2. Pilih project `ul-co`
 3. Go to **Settings** → **Environment Variables**
@@ -43,11 +46,12 @@ Untuk men-deploy ke Vercel, Anda harus mengatur environment variables berikut di
    - Environment: **Production, Preview, Development**
 
 ### Method 2: Via Vercel CLI
+
 ```bash
 npx vercel env add NEXTAUTH_SECRET
 # Paste: xzEYWaikcfhmK8bn+yUifBU5MFV8NG7egaE=
 
-npx vercel env add ADMIN_EMAIL  
+npx vercel env add ADMIN_EMAIL
 # Paste: admin@ulco.com
 
 npx vercel env add ADMIN_PASSWORD
@@ -55,6 +59,7 @@ npx vercel env add ADMIN_PASSWORD
 ```
 
 ### Method 3: Auto Import dari .env.local
+
 ```bash
 npx vercel env pull .env.vercel
 npx vercel env add < .env.local
@@ -66,9 +71,10 @@ npx vercel env add < .env.local
 
 **Root Cause**: NEXTAUTH_SECRET tidak ter-set di Vercel environment
 
-**Quick Fix**: 
+**Quick Fix**:
+
 1. Login ke Vercel Dashboard
-2. Project Settings → Environment Variables  
+2. Project Settings → Environment Variables
 3. Add `NEXTAUTH_SECRET` = `xzEYWaikcfhmK8bn+yUifBU5MFV8NG7uXI9oEG7egaE=`
 4. Redeploy project
 
@@ -89,6 +95,7 @@ npx vercel --prod
 ## 🧪 Testing
 
 Setelah deploy:
+
 1. Buka https://ul-co.vercel.app
 2. Coba akses `/admin/login`
 3. Login dengan credentials di atas
@@ -97,7 +104,7 @@ Setelah deploy:
 ## 📝 Production Checklist
 
 - [ ] NEXTAUTH_SECRET set di Vercel
-- [ ] ADMIN_EMAIL set di Vercel  
+- [ ] ADMIN_EMAIL set di Vercel
 - [ ] ADMIN_PASSWORD set di Vercel
 - [ ] NEXTAUTH_URL otomatis ter-set oleh Vercel
 - [ ] Project dapat di-build tanpa error
@@ -107,12 +114,14 @@ Setelah deploy:
 ## 🆘 Troubleshooting
 
 ### Jika masih error setelah set environment variables:
+
 1. **Check Vercel Logs**: Functions → View Function Logs
 2. **Verify Variables**: Settings → Environment Variables
 3. **Force Redeploy**: Deployments → Redeploy latest
 4. **Check Build Logs**: Deployments → Click latest deployment
 
 ### Common Issues:
+
 - **Secret not found**: Variable name salah atau typo
 - **Still NO_SECRET**: Belum redeploy setelah add variables
 - **Auth not working**: NEXTAUTH_URL tidak sesuai domain

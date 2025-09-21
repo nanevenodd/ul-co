@@ -27,11 +27,29 @@
           "name": "Outer Ulos",
           "description": "Konsep yang menggabungkan perpaduan budaya Batak melalui interpretasi modern dari ritual tradisional Marparbuei, dengan esensi padat storytelling makna kehidupan dan kesatuan budaya dalam kekinian.",
           "price": "Rp 300,000",
-          "images": ["/uploads/hero-1758414317738.jpg"],
-          "materials": ["Premium Cotton", "Traditional Ulos", "Gold Thread"],
-          "sizes": ["S", "M", "L", "XL"],
-          "colors": ["Traditional Red", "Classic Black"],
-          "features": ["Hand-embroidered details", "Traditional patterns", "Modern cut"],
+          "images": [
+            "/uploads/hero-1758414317738.jpg"
+          ],
+          "materials": [
+            "Premium Cotton",
+            "Traditional Ulos",
+            "Gold Thread"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Traditional Red",
+            "Classic Black"
+          ],
+          "features": [
+            "Hand-embroidered details",
+            "Traditional patterns",
+            "Modern cut"
+          ],
           "featured": true
         },
         {
@@ -39,11 +57,28 @@
           "name": "Kemeja Bordir Premium",
           "description": "Variasi elegan untuk acara formal dengan detail ulos yang memukau",
           "price": "Rp 650,000",
-          "images": ["/uploads/hero-1758416096094.jpg"],
-          "materials": ["Kain Ulos Batak", "Silk Blend"],
-          "sizes": ["S", "M", "L", "XL"],
-          "colors": ["White", "Cream"],
-          "features": ["Premium embroidery", "Formal design", "Comfortable fit"],
+          "images": [
+            "/uploads/hero-1758416096094.jpg"
+          ],
+          "materials": [
+            "Kain Ulos Batak",
+            "Silk Blend"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "White",
+            "Cream"
+          ],
+          "features": [
+            "Premium embroidery",
+            "Formal design",
+            "Comfortable fit"
+          ],
           "featured": false
         },
         {
@@ -51,11 +86,28 @@
           "name": "Outer Hantak Hamule",
           "description": "Desain modern dengan sentuhan tradisional untuk tampilan yang elegan",
           "price": "Rp 400,000",
-          "images": ["/uploads/hero-1758414104637.jpg"],
-          "materials": ["Traditional Ulos", "Modern Cotton"],
-          "sizes": ["S", "M", "L", "XL"],
-          "colors": ["Traditional Pattern", "Modern Black"],
-          "features": ["Handwoven details", "Cultural significance", "Versatile styling"],
+          "images": [
+            "/uploads/hero-1758414104637.jpg"
+          ],
+          "materials": [
+            "Traditional Ulos",
+            "Modern Cotton"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Traditional Pattern",
+            "Modern Black"
+          ],
+          "features": [
+            "Handwoven details",
+            "Cultural significance",
+            "Versatile styling"
+          ],
           "featured": true
         },
         {
@@ -63,10 +115,20 @@
           "name": "Test",
           "description": "",
           "price": "500000",
-          "images": ["/uploads/hero-1758416185753.jpg"],
-          "materials": ["Batak"],
-          "sizes": ["S", "L", "XL"],
-          "colors": ["Blue"],
+          "images": [
+            "/uploads/hero-1758416185753.jpg"
+          ],
+          "materials": [
+            "Batak"
+          ],
+          "sizes": [
+            "S",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Blue"
+          ],
           "featured": true
         }
       ]
@@ -79,26 +141,26 @@
       "products": [
         {
           "id": "bt001",
-          "name": "Butet Casual",
-          "description": "Perfect untuk aktivitas sehari-hari dengan kenyamanan maksimal",
-          "price": "Rp 350,000",
-          "images": ["/products/bt001-1.jpg", "/products/bt001-2.jpg"],
-          "materials": ["Kain Ulos Batak", "Cotton Combed"],
-          "sizes": ["S", "M", "L", "XL"],
-          "colors": ["Natural", "Earth Tone"],
-          "features": ["Daily comfort", "Breathable fabric", "Easy care"],
-          "featured": true
-        },
-        {
-          "id": "bt002",
-          "name": "Butet Chic",
-          "description": "Desain chic untuk tampilan kasual yang tetap stylish",
-          "price": "Rp 450,000",
-          "images": ["/products/bt002-1.jpg", "/products/bt002-2.jpg"],
-          "materials": ["Kain Ulos Batak", "Linen Cotton"],
-          "sizes": ["S", "M", "L", "XL"],
-          "colors": ["Soft Pink", "Light Blue"],
-          "features": ["Stylish design", "Comfortable wear", "Versatile styling"],
+          "name": "Butet Casual Modern",
+          "description": "Fashion kasual modern dengan sentuhan ulos dari admin dashboard",
+          "price": "Rp 350.000",
+          "images": [
+            "/uploads/hero-1758416053264.jpg"
+          ],
+          "materials": [
+            "Kain Ulos",
+            "Cotton"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Hitam",
+            "Merah"
+          ],
           "featured": true
         }
       ]
@@ -107,29 +169,91 @@
       "id": "aksesoris",
       "name": "Aksesoris",
       "description": "Pelengkap fashion dengan sentuhan ulos untuk melengkapi penampilan Anda",
-      "image": "/uploads/hero-1758414986583.jpg",
+      "image": "/uploads/hero-1758424672678.jpg",
       "products": [
         {
           "id": "ak001",
-          "name": "Tas Ulos Heritage",
-          "description": "Tas cantik dengan motif ulos untuk melengkapi penampilan",
-          "price": "Rp 250,000",
-          "images": ["/products/ak001-1.jpg", "/products/ak001-2.jpg"],
-          "materials": ["Kain Ulos Batak", "Kulit Sintetis"],
-          "colors": ["Natural", "Brown", "Black"],
-          "features": ["Authentic ulos pattern", "Durable construction", "Multiple compartments"],
+          "name": "Anting Bulat Coklat",
+          "description": "Anting cantik dengan motif ulos autentik dari admin dashboard",
+          "price": "Rp 70.000",
+          "images": [
+            "/uploads/hero-1758424965091.png"
+          ],
+          "materials": [
+            "Kain Ulos",
+            "Silver"
+          ],
+          "sizes": [],
+          "colors": [
+            "Merah",
+            "Emas"
+          ],
           "featured": true
         },
         {
           "id": "ak002",
-          "name": "Scarf Ulos Modern",
-          "description": "Scarf multifungsi dengan motif ulos yang dapat digunakan berbagai cara",
-          "price": "Rp 150,000",
-          "images": ["/products/ak002-1.jpg", "/products/ak002-2.jpg"],
-          "materials": ["Kain Ulos Batak", "Satin"],
-          "colors": ["Red", "Blue", "Green", "Gold"],
-          "features": ["Versatile use", "Premium satin finish", "Traditional motifs"],
+          "name": "Anting Lengkung",
+          "description": "",
+          "price": "Rp 68.000",
+          "images": [
+            "/uploads/hero-1758426641673.png"
+          ],
+          "materials": [],
+          "sizes": [],
+          "colors": [],
           "featured": true
+        },
+        {
+          "id": "ak003",
+          "name": "Anting Bola 2",
+          "description": "",
+          "price": "Rp 67.000",
+          "images": [
+            "/uploads/hero-1758426680075.png"
+          ],
+          "materials": [],
+          "sizes": [],
+          "colors": [],
+          "featured": false
+        },
+        {
+          "id": "ak004",
+          "name": "Anting Bola 1",
+          "description": "",
+          "price": "Rp 65.000",
+          "images": [
+            "/uploads/hero-1758426814192.png"
+          ],
+          "materials": [],
+          "sizes": [],
+          "colors": [],
+          "featured": false
+        },
+        {
+          "id": "ak005",
+          "name": "Anting Keong",
+          "description": "",
+          "price": "Rp 69.000",
+          "images": [
+            "/uploads/hero-1758426836288.png"
+          ],
+          "materials": [],
+          "sizes": [],
+          "colors": [],
+          "featured": true
+        },
+        {
+          "id": "ak006",
+          "name": "Anting Bola Gantung",
+          "description": "",
+          "price": "Rp 70.000",
+          "images": [
+            "/uploads/hero-1758426879484.png"
+          ],
+          "materials": [],
+          "sizes": [],
+          "colors": [],
+          "featured": false
         }
       ]
     }
@@ -145,7 +269,13 @@
     "heritageDescription": "Melestarikan warisan budaya ulos untuk generasi mendatang",
     "innovationDescription": "Menggabungkan tradisi dengan desain modern dan kontemporer",
     "sustainabilityDescription": "Menciptakan fashion berkelanjutan yang ramah lingkungan",
-    "simpleAchievements": ["50+ Collections Created", "100+ Happy Clients", "3 Major Awards", "Featured in 15+ Shows", "10+ Years Experience"],
+    "simpleAchievements": [
+      "50+ Collections Created",
+      "100+ Happy Clients",
+      "3 Major Awards",
+      "Featured in 15+ Shows",
+      "10+ Years Experience"
+    ],
     "achievements": [
       {
         "id": 1,

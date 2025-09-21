@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 
     if (collectionId) {
       // Return products for specific collection
-      const collection = data.collections?.[collectionId];
+      const collection = (data as any).collections?.[collectionId];
       if (!collection) {
         return NextResponse.json({ error: "Collection not found" }, { status: 404 });
       }
@@ -23,8 +23,8 @@ export async function GET(request: NextRequest) {
 
     // Return all products from all collections
     const allProducts = [];
-    if (data.collections) {
-      for (const [collectionId, collection] of Object.entries(data.collections)) {
+    if ((data as any).collections) {
+      for (const [collectionId, collection] of Object.entries((data as any).collections)) {
         const products = (collection as any).products || [];
         allProducts.push(
           ...products.map((product: any) => ({
@@ -93,16 +93,8 @@ export async function POST(request: NextRequest) {
     // Add product to collection
     data.collections[collectionId].products = [...existingProducts, newProduct];
 
-    // Save updated content - Add Vercel error handling
-    try {
-      await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
-    } catch (writeError) {
-      console.error("File write error (Vercel filesystem is readonly):", writeError);
-      return NextResponse.json({ 
-        error: "Database write failed. This is a known Vercel limitation. Please use a database instead of file storage for production.",
-        details: "Vercel serverless functions have read-only filesystem. Consider using Vercel KV, PostgreSQL, or another database solution."
-      }, { status: 500 });
-    }
+    // Save updated content
+    await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
 
     return NextResponse.json({
       message: "Product created successfully",
@@ -110,15 +102,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error creating product:", error);
-    
-    // Check if it's a filesystem permission error
-    if (error instanceof Error && error.message.includes('EROFS')) {
-      return NextResponse.json({ 
-        error: "Read-only filesystem error on Vercel. File writes are not supported in production.",
-        solution: "Please set up a database (PostgreSQL, MongoDB, etc.) instead of file-based storage."
-      }, { status: 500 });
-    }
-    
     return NextResponse.json({ error: "Failed to create product" }, { status: 500 });
   }
 }
@@ -164,16 +147,8 @@ export async function PUT(request: NextRequest) {
 
     data.collections[collectionId].products[productIndex] = updatedProduct;
 
-    // Save updated content - Add Vercel error handling
-    try {
-      await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
-    } catch (writeError) {
-      console.error("File write error (Vercel filesystem is readonly):", writeError);
-      return NextResponse.json({ 
-        error: "Database write failed. This is a known Vercel limitation. Please use a database instead of file storage for production.",
-        details: "Vercel serverless functions have read-only filesystem. Consider using Vercel KV, PostgreSQL, or another database solution."
-      }, { status: 500 });
-    }
+    // Save updated content
+    await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
 
     return NextResponse.json({
       message: "Product updated successfully",
@@ -181,15 +156,6 @@ export async function PUT(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error updating product:", error);
-    
-    // Check if it's a filesystem permission error
-    if (error instanceof Error && error.message.includes('EROFS')) {
-      return NextResponse.json({ 
-        error: "Read-only filesystem error on Vercel. File writes are not supported in production.",
-        solution: "Please set up a database (PostgreSQL, MongoDB, etc.) instead of file-based storage."
-      }, { status: 500 });
-    }
-    
     return NextResponse.json({ error: "Failed to update product" }, { status: 500 });
   }
 }
@@ -223,29 +189,12 @@ export async function DELETE(request: NextRequest) {
 
     data.collections[collectionId].products = updatedProducts;
 
-    // Save updated content - Add error handling for Vercel
-    try {
-      await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
-    } catch (writeError) {
-      console.error("File write error (Vercel filesystem is readonly):", writeError);
-      return NextResponse.json({ 
-        error: "Database write failed. This is a known Vercel limitation. Please use a database instead of file storage for production.",
-        details: "Vercel serverless functions have read-only filesystem. Consider using Vercel KV, PostgreSQL, or another database solution."
-      }, { status: 500 });
-    }
+    // Save updated content
+    await fs.writeFile(contentFilePath, JSON.stringify(data, null, 2));
 
     return NextResponse.json({ message: "Product deleted successfully" });
   } catch (error) {
     console.error("Error deleting product:", error);
-    
-    // Check if it's a filesystem permission error
-    if (error instanceof Error && error.message.includes('EROFS')) {
-      return NextResponse.json({ 
-        error: "Read-only filesystem error on Vercel. File writes are not supported in production.",
-        solution: "Please set up a database (PostgreSQL, MongoDB, etc.) instead of file-based storage."
-      }, { status: 500 });
-    }
-    
     return NextResponse.json({ error: "Failed to delete product" }, { status: 500 });
   }
 }
