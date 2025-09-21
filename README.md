@@ -49,6 +49,13 @@ ADMIN_EMAIL="admin@ulco.com"
 ADMIN_PASSWORD="your-admin-password"
 ```
 
+### 3. Generate NextAuth Secret
+
+```bash
+# Generate secure secret for production
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+```
+
 ### 3. Generate Prisma Client dan Push Schema
 
 ```bash
