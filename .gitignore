@@ -50,9 +50,9 @@ next-env.d.ts
 .env.test.local
 .env.production.local
 
-# uploads
-/public/uploads/*
-!/public/uploads/.gitkeep
+# uploads - Allow all uploads to be tracked in git
+# /public/uploads/*
+# !/public/uploads/.gitkeep
 
 # IDE
 .vscode/settings.json

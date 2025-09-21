@@ -19,50 +19,20 @@
     "marparbuei": {
       "id": "marparbuei",
       "name": "Marparbuei",
-      "description": "Koleksi tradisional dengan sentuhan modern yang memadukan kearifan lokal dengan desain kontempo",
+      "description": "Koleksi Marparbuei dengan sentuhan ulos hande-hande hitam hadir dalam nuansa semi formal yang elegan dan profesional. Desainnya timeless, cocok untuk mendukung penampilan kerja maupun acara resmi",
       "image": "/uploads/hero-1758413922506.jpg",
       "products": [
         {
-          "id": "mp001",
-          "name": "Outer Ulos",
-          "description": "Konsep yang menggabungkan perpaduan budaya Batak melalui interpretasi modern dari ritual tradisional Marparbuei, dengan esensi padat storytelling makna kehidupan dan kesatuan budaya dalam kekinian.",
-          "price": "Rp 300,000",
-          "images": [
-            "/uploads/hero-1758414317738.jpg"
-          ],
-          "materials": [
-            "Premium Cotton",
-            "Traditional Ulos",
-            "Gold Thread"
-          ],
-          "sizes": [
-            "S",
-            "M",
-            "L",
-            "XL"
-          ],
-          "colors": [
-            "Traditional Red",
-            "Classic Black"
-          ],
-          "features": [
-            "Hand-embroidered details",
-            "Traditional patterns",
-            "Modern cut"
-          ],
-          "featured": true
-        },
-        {
           "id": "mp002",
-          "name": "Kemeja Bordir Premium",
+          "name": "Outer Hitam ulos hitam",
           "description": "Variasi elegan untuk acara formal dengan detail ulos yang memukau",
-          "price": "Rp 650,000",
+          "price": "Rp 400,000",
           "images": [
-            "/uploads/hero-1758416096094.jpg"
+            "/uploads/hero-1758430058399.png",
+            "/uploads/hero-1758430063201.png"
           ],
           "materials": [
-            "Kain Ulos Batak",
-            "Silk Blend"
+            "Kain Ulos Batak"
           ],
           "sizes": [
             "S",
@@ -71,8 +41,7 @@
             "XL"
           ],
           "colors": [
-            "White",
-            "Cream"
+            "Hitam"
           ],
           "features": [
             "Premium embroidery",
@@ -83,15 +52,14 @@
         },
         {
           "id": "mp003",
-          "name": "Outer Hantak Hamule",
+          "name": "Outer Coklat Ulos hitam",
           "description": "Desain modern dengan sentuhan tradisional untuk tampilan yang elegan",
           "price": "Rp 400,000",
           "images": [
-            "/uploads/hero-1758414104637.jpg"
+            "/uploads/hero-1758430108440.png"
           ],
           "materials": [
-            "Traditional Ulos",
-            "Modern Cotton"
+            "Traditional Ulos"
           ],
           "sizes": [
             "S",
@@ -100,34 +68,12 @@
             "XL"
           ],
           "colors": [
-            "Traditional Pattern",
-            "Modern Black"
+            "Coklat"
           ],
           "features": [
             "Handwoven details",
             "Cultural significance",
             "Versatile styling"
-          ],
-          "featured": true
-        },
-        {
-          "id": "ma004",
-          "name": "Test",
-          "description": "",
-          "price": "500000",
-          "images": [
-            "/uploads/hero-1758416185753.jpg"
-          ],
-          "materials": [
-            "Batak"
-          ],
-          "sizes": [
-            "S",
-            "L",
-            "XL"
-          ],
-          "colors": [
-            "Blue"
           ],
           "featured": true
         }
@@ -136,16 +82,19 @@
     "butet": {
       "id": "butet",
       "name": "Butet",
-      "description": "Koleksi modern yang menggabungkan kenyamanan sehari-hari dengan keindahan motif ulos",
+      "description": "Tampil berkelas di setiap momen formal dengan outer Pucca, dihiasi detail payet yang mewah dan elegan. Perpaduan modern & tradisional yang siap melengkapi koleksi istimewamu.",
       "image": "/uploads/hero-1758416053264.jpg",
       "products": [
         {
           "id": "bt001",
-          "name": "Butet Casual Modern",
-          "description": "Fashion kasual modern dengan sentuhan ulos dari admin dashboard",
-          "price": "Rp 350.000",
+          "name": "Outer Ulos",
+          "description": "Tampil berkelas di setiap momen formal dengan outer Pucca, dihiasi detail payet yang mewah dan elegan. Perpaduan modern & tradisional yang siap melengkapi koleksi istimewamu.",
+          "price": "Rp 450.000",
           "images": [
-            "/uploads/hero-1758416053264.jpg"
+            "/uploads/hero-1758416053264.jpg",
+            "/uploads/hero-1758429434100.png",
+            "/uploads/hero-1758429438598.png",
+            "/uploads/hero-1758429442971.png"
           ],
           "materials": [
             "Kain Ulos",
@@ -158,8 +107,8 @@
             "XL"
           ],
           "colors": [
-            "Hitam",
-            "Merah"
+            "Putih",
+            "Ulos Pucca"
           ],
           "featured": true
         }
@@ -168,26 +117,20 @@
     "aksesoris": {
       "id": "aksesoris",
       "name": "Aksesoris",
-      "description": "Pelengkap fashion dengan sentuhan ulos untuk melengkapi penampilan Anda",
+      "description": "Aksesoris UL.CO menghadirkan sentuhan eksklusif dari sisa ulos, tercipta dengan konsep zero waste dan berdampak positif bagi budaya serta lingkungan.",
       "image": "/uploads/hero-1758424672678.jpg",
       "products": [
         {
           "id": "ak001",
           "name": "Anting Bulat Coklat",
-          "description": "Anting cantik dengan motif ulos autentik dari admin dashboard",
+          "description": "",
           "price": "Rp 70.000",
           "images": [
             "/uploads/hero-1758424965091.png"
           ],
-          "materials": [
-            "Kain Ulos",
-            "Silver"
-          ],
+          "materials": [],
           "sizes": [],
-          "colors": [
-            "Merah",
-            "Emas"
-          ],
+          "colors": [],
           "featured": true
         },
         {
@@ -316,32 +259,37 @@
     ]
   },
   "contact": {
-    "title": "Get in Touch",
-    "subtitle": "Mari berdiskusi tentang proyek fashion impian",
+    "address": "Bandung",
     "whatsapp": "+62 822-8304-5172",
-    "whatsappMessage": "Halo, saya tertarik dengan ",
-    "email": "admin@ulco.com",
-    "address": "Jl. Fashion Street No. 123, Jakarta, Indonesia",
-    "workingHours": "Senin - Jumat: 09",
-    "socialMedia": {
-      "instagram": "ul.co_tarulipasaribu/",
-      "facebook": "taruli.pasaribu.419951",
-      "tiktok": "@ulco_official"
-    },
-    "quickFaqs": [
+    "email": "ta8clothing@gmail.com"
+  },
+  "settings": {
+    "whatsapp": {
+      "number": "6282283045172",
+      "messageTemplate": "Hi, I'm interested in this product: {productName} - {productPrice}. Can you provide more details?"
+    }
+  },
+  "footer": {
+    "socialLinks": [
       {
-        "question": "Berapa lama proses pembuatan custom design?",
-        "answer": "Proses custom design biasanya memakan waktu 2-4 minggu tergantung kompleksitas desain."
+        "id": "1",
+        "name": "Instagram",
+        "url": "https://www.instagram.com/ul.co_tarulipasaribu/",
+        "icon": "instagram"
       },
       {
-        "question": "Apakah bisa konsultasi online?",
-        "answer": "Ya, kami menyediakan layanan konsultasi online via video call atau WhatsApp."
+        "id": "2",
+        "name": "Facebook",
+        "url": "https://facebook.com/taruli.pasaribu.419951",
+        "icon": "facebook"
       },
       {
-        "question": "Bagaimana cara pemesanan?",
-        "answer": "Anda bisa memesan melalui form di bawah ini, WhatsApp, atau kunjungi studio kami langsung."
+        "id": "3",
+        "name": "TikTok",
+        "url": "https://tiktok.com/@ulco_official",
+        "icon": "tiktok"
       }
     ]
   },
-  "lastUpdated": "2025-09-21T01:39:57.540Z"
+  "lastUpdated": "2025-09-21T04:52:38.048Z"
 }

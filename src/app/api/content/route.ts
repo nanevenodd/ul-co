@@ -31,3 +31,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Failed to update content" }, { status: 500 });
   }
 }
+
+export async function PUT(request: NextRequest) {
+  try {
+    const updates = await request.json();
+
+    // Read current content
+    const fileContents = await fs.readFile(contentPath, "utf8");
+    const currentContent = JSON.parse(fileContents);
+
+    // Merge updates with current content
+    const updatedContent = { ...currentContent, ...updates };
+    
+    // Add timestamp
+    updatedContent.lastUpdated = new Date().toISOString();
+
+    // Write to file
+    await fs.writeFile(contentPath, JSON.stringify(updatedContent, null, 2));
+
+    return NextResponse.json({ success: true, message: "Content updated successfully" });
+  } catch (error) {
+    console.error("Error updating content:", error);
+    return NextResponse.json({ error: "Failed to update content" }, { status: 500 });
+  }
+}

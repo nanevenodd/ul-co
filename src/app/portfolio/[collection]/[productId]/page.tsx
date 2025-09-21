@@ -44,6 +44,10 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [whatsappSettings, setWhatsappSettings] = useState({
+    number: "6281234567890",
+    messageTemplate: "Hi, I'm interested in this product: {productName} - {productPrice}. Can you provide more details?"
+  });
 
   // Fetch product and collection data
   const fetchProductData = async () => {
@@ -53,6 +57,11 @@ export default function ProductDetail() {
       if (response.ok) {
         const data = await response.json();
         const collections = data.collections || {};
+
+        // Load WhatsApp settings if available
+        if (data.settings?.whatsapp) {
+          setWhatsappSettings(data.settings.whatsapp);
+        }
 
         if (collections[collectionId]) {
           const collectionData = collections[collectionId];
@@ -99,17 +108,18 @@ export default function ProductDetail() {
   const handleWhatsAppOrder = () => {
     if (!product) return;
 
-    const sizeText = selectedSize ? `Size: ${selectedSize}` : "";
-    const message = `Halo! Saya tertarik dengan produk:
+    // Use template from admin settings or fallback to default
+    let message = whatsappSettings.messageTemplate
+      .replace("{productName}", product.name)
+      .replace("{productPrice}", product.price);
 
-*${product.name}*
-Harga: ${product.price}
-${sizeText}
-Quantity: ${quantity}
+    // Add size and quantity info
+    if (selectedSize) {
+      message += `\nSize: ${selectedSize}`;
+    }
+    message += `\nQuantity: ${quantity}`;
 
-Bisa tolong dibantu untuk informasi lebih lanjut? Terima kasih!`;
-
-    const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${whatsappSettings.number}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, "_blank");
   };
 
@@ -176,23 +186,23 @@ Bisa tolong dibantu untuk informasi lebih lanjut? Terima kasih!`;
     <>
       <Header />
 
-      <main className="min-h-screen bg-slate-800">
+      <main className="min-h-screen bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Breadcrumb */}
-          <nav className="flex items-center space-x-2 text-sm text-gray-400 mb-8">
-            <Link href="/portfolio" className="hover:text-white">
+          <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
+            <Link href="/portfolio" className="hover:text-[#921e27]">
               Portfolio
             </Link>
             <span>/</span>
-            <Link href={`/portfolio/${collectionId}`} className="hover:text-white">
+            <Link href={`/portfolio/${collectionId}`} className="hover:text-[#921e27]">
               {collection.name}
             </Link>
             <span>/</span>
-            <span className="text-white">{product.name}</span>
+            <span className="text-[#921e27] font-medium">{product.name}</span>
           </nav>
 
           {/* Back Button */}
-          <button onClick={() => router.back()} className="flex items-center text-gray-400 hover:text-white mb-6 transition-colors">
+          <button onClick={() => router.back()} className="flex items-center text-gray-600 hover:text-[#921e27] mb-6 transition-colors">
             <ChevronLeftIcon className="h-5 w-5 mr-2" />
             Back
           </button>
@@ -237,31 +247,31 @@ Bisa tolong dibantu untuk informasi lebih lanjut? Terima kasih!`;
             <div className="space-y-6">
               <div className="flex items-start justify-between">
                 <div>
-                  <h1 className="text-3xl font-bold text-white mb-2">{product.name}</h1>
+                  <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
                   <p className="text-2xl font-bold text-[#921e27]">{product.price}</p>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <button onClick={() => setIsFavorite(!isFavorite)} className="p-2 rounded-full hover:bg-slate-700 transition-colors">
-                    {isFavorite ? <HeartIconSolid className="h-6 w-6 text-red-500" /> : <HeartIcon className="h-6 w-6 text-gray-400" />}
+                  <button onClick={() => setIsFavorite(!isFavorite)} className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+                    {isFavorite ? <HeartIconSolid className="h-6 w-6 text-[#921e27]" /> : <HeartIcon className="h-6 w-6 text-gray-400" />}
                   </button>
-                  <button onClick={handleShare} className="p-2 rounded-full hover:bg-slate-700 transition-colors" title="Share product">
-                    <ShareIcon className="h-6 w-6 text-gray-400" />
+                  <button onClick={handleShare} className="p-2 rounded-full hover:bg-gray-100 transition-colors" title="Share product">
+                    <ShareIcon className="h-6 w-6 text-gray-600" />
                   </button>
                 </div>
               </div>
 
-              <p className="text-gray-300 text-lg leading-relaxed">{product.description}</p>
+              <p className="text-gray-600 text-lg leading-relaxed">{product.description}</p>
 
               {/* Size Selection */}
               {product.sizes && product.sizes.length > 0 && (
                 <div>
-                  <h3 className="text-white font-medium mb-3">Size</h3>
+                  <h3 className="text-gray-900 font-medium mb-3">Size</h3>
                   <div className="flex space-x-3">
                     {product.sizes.map((size) => (
                       <button
                         key={size}
                         onClick={() => setSelectedSize(size)}
-                        className={`w-12 h-12 border rounded-lg font-medium transition-all ${selectedSize === size ? "border-white bg-white text-slate-800" : "border-gray-600 text-gray-300 hover:border-gray-400"}`}>
+                        className={`w-12 h-12 border rounded-lg font-medium transition-all ${selectedSize === size ? "border-[#921e27] bg-[#921e27] text-white" : "border-gray-300 text-gray-600 hover:border-[#921e27]"}`}>
                         {size}
                       </button>
                     ))}
@@ -272,10 +282,10 @@ Bisa tolong dibantu untuk informasi lebih lanjut? Terima kasih!`;
               {/* Color Selection */}
               {product.colors && product.colors.length > 0 && (
                 <div>
-                  <h3 className="text-white font-medium mb-3">Colors Available</h3>
+                  <h3 className="text-gray-900 font-medium mb-3">Colors Available</h3>
                   <div className="flex flex-wrap gap-2">
                     {product.colors.map((color) => (
-                      <span key={color} className="px-3 py-1 bg-slate-700 text-gray-300 rounded-full text-sm">
+                      <span key={color} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm border">
                         {color}
                       </span>
                     ))}
@@ -285,13 +295,13 @@ Bisa tolong dibantu untuk informasi lebih lanjut? Terima kasih!`;
 
               {/* Quantity */}
               <div>
-                <h3 className="text-white font-medium mb-3">Quantity</h3>
+                <h3 className="text-gray-900 font-medium mb-3">Quantity</h3>
                 <div className="flex items-center space-x-3">
-                  <button onClick={() => handleQuantityChange(-1)} className="w-10 h-10 border border-gray-600 rounded-lg text-white hover:bg-slate-700 transition-colors">
+                  <button onClick={() => handleQuantityChange(-1)} className="w-10 h-10 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
                     -
                   </button>
-                  <span className="text-white font-medium w-8 text-center">{quantity}</span>
-                  <button onClick={() => handleQuantityChange(1)} className="w-10 h-10 border border-gray-600 rounded-lg text-white hover:bg-slate-700 transition-colors">
+                  <span className="text-gray-900 font-medium w-8 text-center">{quantity}</span>
+                  <button onClick={() => handleQuantityChange(1)} className="w-10 h-10 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
                     +
                   </button>
                 </div>
@@ -308,10 +318,10 @@ Bisa tolong dibantu untuk informasi lebih lanjut? Terima kasih!`;
               {/* Materials */}
               {product.materials && product.materials.length > 0 && (
                 <div>
-                  <h3 className="text-white font-medium mb-3">Materials</h3>
+                  <h3 className="text-gray-900 font-medium mb-3">Materials</h3>
                   <ul className="space-y-1">
                     {product.materials.map((material, index) => (
-                      <li key={index} className="text-gray-300 flex items-center">
+                      <li key={index} className="text-gray-600 flex items-center">
                         <span className="w-2 h-2 bg-[#921e27] rounded-full mr-3"></span>
                         {material}
                       </li>
@@ -323,10 +333,10 @@ Bisa tolong dibantu untuk informasi lebih lanjut? Terima kasih!`;
               {/* Features */}
               {product.features && product.features.length > 0 && (
                 <div>
-                  <h3 className="text-white font-medium mb-3">Features</h3>
+                  <h3 className="text-gray-900 font-medium mb-3">Features</h3>
                   <ul className="space-y-1">
                     {product.features.map((feature, index) => (
-                      <li key={index} className="text-gray-300 flex items-center">
+                      <li key={index} className="text-gray-600 flex items-center">
                         <span className="w-2 h-2 bg-[#921e27] rounded-full mr-3"></span>
                         {feature}
                       </li>
@@ -340,7 +350,7 @@ Bisa tolong dibantu untuk informasi lebih lanjut? Terima kasih!`;
           {/* Other Items in Collection */}
           {otherProducts.length > 0 && (
             <div>
-              <h2 className="text-2xl font-bold text-white mb-8 text-center">Other Items in {collection.name}</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Other Items in {collection.name}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {otherProducts.slice(0, 6).map((otherProduct) => (
                   <Link key={otherProduct.id} href={`/portfolio/${collectionId}/${otherProduct.id}`} className="group">
@@ -354,7 +364,7 @@ Bisa tolong dibantu untuk informasi lebih lanjut? Terima kasih!`;
                       </div>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-white font-medium mb-2 group-hover:text-[#921e27] transition-colors">{otherProduct.name}</h3>
+                      <h3 className="text-gray-900 font-medium mb-2 group-hover:text-[#921e27] transition-colors">{otherProduct.name}</h3>
                       <p className="text-[#921e27] font-bold">{otherProduct.price}</p>
                     </div>
                   </Link>

@@ -12,7 +12,10 @@
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "postinstall": "prisma generate",
-    "deploy": "npm run build && vercel --prod"
+    "deploy": "npm run build && vercel --prod",
+    "push": "git add . && git commit -m \"feat: Update content and uploads\" && git push origin master",
+    "push-uploads": "git add public/uploads/ && git commit -m \"feat: Add new uploaded images\" && git push origin master",
+    "check-uploads": "git status public/uploads/"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

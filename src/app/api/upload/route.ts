@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeFile } from "fs/promises";
 import { join } from "path";
+import { exec } from "child_process";
+import { promisify } from "util";
+
+const execAsync = promisify(exec);
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,6 +25,15 @@ export async function POST(request: NextRequest) {
     const filePath = join(process.cwd(), "public/uploads", fileName);
 
     await writeFile(filePath, buffer);
+
+    // Auto-add uploaded file to git
+    try {
+      await execAsync(`git add public/uploads/${fileName}`);
+      console.log(`✅ Auto-added ${fileName} to git`);
+    } catch (gitError) {
+      console.warn(`⚠️ Could not auto-add ${fileName} to git:`, gitError);
+      // Don't fail the upload if git fails
+    }
 
     return NextResponse.json({
       success: true,
