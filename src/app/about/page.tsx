@@ -4,6 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { promises as fs } from "fs";
 import path from "path";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "Tentang Taruli Pasaribu - Fashion designer yang menghadirkan fashion berbasis kain ulos dengan desain modern",
+};
 
 async function getContent() {
   try {
@@ -45,7 +51,7 @@ export default async function About() {
         <section className="bg-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <h1 className="text-4xl font-bold text-gray-900 mb-6">About UL.CO</h1>
+              <h1 className="text-4xl font-bold text-gray-900 mb-6">Value UL.CO</h1>
               <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">{aboutData.introduction || "Selamat datang di dunia fashion UL.CO, di mana tradisi bertemu dengan inovasi."}</p>
             </div>
           </div>
@@ -58,7 +64,7 @@ export default async function About() {
               <div className="mb-8 lg:mb-0">
                 <div className="h-96 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden relative">
                   {aboutData.designerPhoto ? (
-                    <Image src={aboutData.designerPhoto} alt={aboutData.designerName || "Designer"} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+                    <Image src={aboutData.designerPhoto} alt={aboutData.designerName || "Designer"} fill className="object-cover object-center object-top" sizes="(max-width: 768px) 100vw, 50vw" />
                   ) : (
                     <span className="text-gray-400">Designer Photo</span>
                   )}

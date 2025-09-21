@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -14,13 +16,61 @@ export default function Header() {
     { name: "Contact", href: "/contact" },
   ];
 
+  // Get page title and subtitle based on current pathname
+  const getPageTitle = () => {
+    if (pathname === "/") return "UL.CO - Fashion Berbasis Kain Ulos";
+    if (pathname === "/portfolio") return "Portfolio - UL.CO";
+    if (pathname.startsWith("/portfolio/")) {
+      const segments = pathname.split("/");
+      const collection = segments[2];
+      if (segments[3]) {
+        return `Product Detail - UL.CO`;
+      }
+      return `${collection.charAt(0).toUpperCase() + collection.slice(1)} Collection - UL.CO`;
+    }
+    if (pathname === "/about") return "About - UL.CO";
+    if (pathname === "/faq") return "FAQ - UL.CO";
+    if (pathname === "/contact") return "Contact - UL.CO";
+    return "UL.CO - Taruli Pasaribu Fashion";
+  };
+
+  const getSubtitle = () => {
+    if (pathname === "/") return "Fashion Berbasis Kain Ulos";
+    if (pathname === "/portfolio") return "Our Collections";
+    if (pathname.startsWith("/portfolio/")) {
+      const segments = pathname.split("/");
+      const collection = segments[2];
+      if (segments[3]) {
+        return "Product Details";
+      }
+      return `${collection.charAt(0).toUpperCase() + collection.slice(1)} Collection`;
+    }
+    if (pathname === "/about") return "About Designer";
+    if (pathname === "/faq") return "Frequently Asked Questions";
+    if (pathname === "/contact") return "Get In Touch";
+    return "Taruli Pasaribu Fashion";
+  };
+
+
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-6">
-          <div className="flex items-center">
-            <Link href="/" className="text-3xl font-bold" style={{ color: "#921e27" }}>
-              UL.CO
+          <div className="flex items-center space-x-3">
+            <Link href="/" className="flex items-center space-x-3">
+              {/* Logo UL.CO */}
+              <div className="w-12 h-12 bg-gradient-to-br from-[#921e27] to-[#b8242f] rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">UL</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold" style={{ color: "#921e27" }}>
+                  UL.CO
+                </span>
+                <span className="text-xs text-gray-500 hidden sm:block">
+                  {getSubtitle()}
+                </span>
+              </div>
             </Link>
           </div>
 

@@ -14,8 +14,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UL.CO - Taruli Pasaribu Fashion Designer",
+  title: {
+    template: "%s | UL.CO",
+    default: "UL.CO - Fashion Berbasis Kain Ulos",
+  },
   description: "UL.CO menghadirkan fashion berbasis kain ulos dengan desain modern dan berkelanjutan",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-16.svg", sizes: "16x16", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

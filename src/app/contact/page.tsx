@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import DynamicTitle from "@/components/DynamicTitle";
 
 interface Faq {
   question: string;
@@ -105,6 +106,7 @@ function ContactComponent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <DynamicTitle title="Contact" />
       <Header />
 
       <main>

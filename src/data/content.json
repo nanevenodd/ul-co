@@ -27,11 +27,27 @@
           "name": "Outer Hitam ulos hitam",
           "description": "Variasi elegan untuk acara formal dengan detail ulos yang memukau",
           "price": "Rp 400,000",
-          "images": ["/uploads/hero-1758430058399.png", "/uploads/hero-1758430063201.png"],
-          "materials": ["Kain Ulos Batak"],
-          "sizes": ["S", "M", "L", "XL"],
-          "colors": ["Hitam"],
-          "features": ["Premium embroidery", "Formal design", "Comfortable fit"],
+          "images": [
+            "/uploads/hero-1758430058399.png",
+            "/uploads/hero-1758430063201.png"
+          ],
+          "materials": [
+            "Kain Ulos Batak"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Hitam"
+          ],
+          "features": [
+            "Premium embroidery",
+            "Formal design",
+            "Comfortable fit"
+          ],
           "featured": false
         },
         {
@@ -39,11 +55,26 @@
           "name": "Outer Coklat Ulos hitam",
           "description": "Desain modern dengan sentuhan tradisional untuk tampilan yang elegan",
           "price": "Rp 400,000",
-          "images": ["/uploads/hero-1758430108440.png"],
-          "materials": ["Traditional Ulos"],
-          "sizes": ["S", "M", "L", "XL"],
-          "colors": ["Coklat"],
-          "features": ["Handwoven details", "Cultural significance", "Versatile styling"],
+          "images": [
+            "/uploads/hero-1758430108440.png"
+          ],
+          "materials": [
+            "Traditional Ulos"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Coklat"
+          ],
+          "features": [
+            "Handwoven details",
+            "Cultural significance",
+            "Versatile styling"
+          ],
           "featured": true
         }
       ]
@@ -59,10 +90,26 @@
           "name": "Outer Ulos",
           "description": "Tampil berkelas di setiap momen formal dengan outer Pucca, dihiasi detail payet yang mewah dan elegan. Perpaduan modern & tradisional yang siap melengkapi koleksi istimewamu.",
           "price": "Rp 450.000",
-          "images": ["/uploads/hero-1758416053264.jpg", "/uploads/hero-1758429434100.png", "/uploads/hero-1758429438598.png", "/uploads/hero-1758429442971.png"],
-          "materials": ["Kain Ulos", "Cotton"],
-          "sizes": ["S", "M", "L", "XL"],
-          "colors": ["Putih", "Ulos Pucca"],
+          "images": [
+            "/uploads/hero-1758416053264.jpg",
+            "/uploads/hero-1758429434100.png",
+            "/uploads/hero-1758429438598.png",
+            "/uploads/hero-1758429442971.png"
+          ],
+          "materials": [
+            "Kain Ulos",
+            "Cotton"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Putih",
+            "Ulos Pucca"
+          ],
           "featured": true
         }
       ]
@@ -78,7 +125,9 @@
           "name": "Anting Bulat Coklat",
           "description": "",
           "price": "Rp 70.000",
-          "images": ["/uploads/hero-1758424965091.png"],
+          "images": [
+            "/uploads/hero-1758424965091.png"
+          ],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -89,7 +138,9 @@
           "name": "Anting Lengkung",
           "description": "",
           "price": "Rp 68.000",
-          "images": ["/uploads/hero-1758426641673.png"],
+          "images": [
+            "/uploads/hero-1758426641673.png"
+          ],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -100,7 +151,9 @@
           "name": "Anting Bola 2",
           "description": "",
           "price": "Rp 67.000",
-          "images": ["/uploads/hero-1758426680075.png"],
+          "images": [
+            "/uploads/hero-1758426680075.png"
+          ],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -111,7 +164,9 @@
           "name": "Anting Bola 1",
           "description": "",
           "price": "Rp 65.000",
-          "images": ["/uploads/hero-1758426814192.png"],
+          "images": [
+            "/uploads/hero-1758426814192.png"
+          ],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -122,7 +177,9 @@
           "name": "Anting Keong",
           "description": "",
           "price": "Rp 69.000",
-          "images": ["/uploads/hero-1758426836288.png"],
+          "images": [
+            "/uploads/hero-1758426836288.png"
+          ],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -133,7 +190,9 @@
           "name": "Anting Bola Gantung",
           "description": "",
           "price": "Rp 70.000",
-          "images": ["/uploads/hero-1758426879484.png"],
+          "images": [
+            "/uploads/hero-1758426879484.png"
+          ],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -143,34 +202,61 @@
     }
   },
   "about": {
-    "introduction": "UL.CO, where traditional Indonesian artistry meets contemporary fashion design.",
+    "introduction": "UL.CO menghadirkan koleksi ready-to-wear berbahan Ulos dengan desain modern yang fungsional, menjadikan warisan budaya relevan dengan keseharian",
     "designerName": "Taruli Pasaribu",
-    "experience": "10+ years of experience in",
+    "experience": "7+ years of experience in",
     "specialization": "Traditional meets Modern",
-    "philosophyText": "Our design philosophy centers on creating timeless pieces that celebrate cultural heritage while embracing modern aesthetics.",
+    "philosophyText": "Ciri khas Taruli ada di setiap koleksinya: selalu menghadirkan ulos sebagai statement utama. Buatnya, ulos bukan cuma kain, tapi warisan penuh makna yang bisa diangkat jadi karya modern, elegan, dan relevan dengan gaya hidup masa kini. Lewat UL.CO, Taruli ingin nunjukkin kalau budaya bisa dibawa ke panggung fashion tanpa kehilangan jiwanya.",
     "philosophyQuote": "Setiap karya adalah cerita, setiap desain adalah warisan. Fashion bukan hanya tentang penampilan, tetapi juga tentang identitas dan makna.",
-    "biography": "Taruli Pasaribu is a renowned fashion designer who has dedicated her career to bridging the gap between traditional Indonesian textiles and contemporary fashion. Her work has been featured in various fashion shows across Indonesia and Southeast Asia.",
+    "biography": "Taruli Pasaribu, founder dari UL.CO, adalah fashion designer muda asal Pematang Siantar yang udah jatuh cinta sama dunia seni dan busana sejak kecil. Lulus dari sekolah fashion dengan prestasi gemilang, di usia 21 tahun ia sudah mengantongi berbagai kemenangan lomba dan penghargaan yang bikin namanya semakin dikenal.\n",
     "heritageDescription": "Melestarikan warisan budaya ulos untuk generasi mendatang",
     "innovationDescription": "Menggabungkan tradisi dengan desain modern dan kontemporer",
     "sustainabilityDescription": "Menciptakan fashion berkelanjutan yang ramah lingkungan",
-    "simpleAchievements": ["50+ Collections Created", "100+ Happy Clients", "3 Major Awards", "Featured in 15+ Shows", "10+ Years Experience"],
+    "simpleAchievements": [
+      "30 collections created",
+      "100+ Happy Clients",
+      "3 Major Awards",
+      "Featured in 5 Shows",
+      "7+ Years Experience"
+    ],
     "achievements": [
       {
         "id": 1,
-        "title": "Best Designer Award",
+        "title": "Kolaborasi Bersama Dekranasda",
         "year": "2023",
-        "organization": "Indonesia Fashion Week",
-        "description": "Recognized for innovative use of traditional patterns in"
+        "organization": "Dekranasda",
+        "description": ""
       },
       {
-        "id": 2,
-        "title": "Cultural Heritage Award",
-        "year": "2022",
-        "organization": "Ministry of Culture",
-        "description": "Honored for preserving traditional textile techniques"
+        "title": "Incubator Bisnis Kementrian Perindustrian",
+        "year": "2024",
+        "organization": "Kementrian Perindustrian",
+        "description": "",
+        "id": 1758432946100
+      },
+      {
+        "title": "Binaan Bank Indonesia",
+        "year": "2025",
+        "organization": "Bank Indonesia",
+        "description": "",
+        "id": 1758432984670
+      },
+      {
+        "title": " Juara 3 lomba Wirausaha Muda",
+        "year": "2025",
+        "organization": "Wirausaha Muda ",
+        "description": "",
+        "id": 1758433008165
+      },
+      {
+        "title": "Lolos Binaan Pelindo",
+        "year": "2025",
+        "organization": "PELINDO",
+        "description": "",
+        "id": 1758433084160
       }
     ],
-    "designerPhoto": "/uploads/hero-1758391129833.jpg"
+    "designerPhoto": "/uploads/hero-1758433884968.jpg"
   },
   "faq": {
     "title": "Frequently Asked Questions",
@@ -185,11 +271,6 @@
         "id": 2,
         "question": "Apakah produk UL.CO tersedia dalam berbagai ukuran?",
         "answer": "Ya, kami menyediakan berbagai ukuran mulai dari S hingga XL. Kami juga menerima pesanan custom dengan ukuran khusus sesuai kebutuhan Anda."
-      },
-      {
-        "id": 3,
-        "question": "Test",
-        "answer": "test"
       }
     ]
   },
@@ -226,5 +307,5 @@
       }
     ]
   },
-  "lastUpdated": "2025-09-21T04:52:38.048Z"
+  "lastUpdated": "2025-09-21T05:52:16.088Z"
 }

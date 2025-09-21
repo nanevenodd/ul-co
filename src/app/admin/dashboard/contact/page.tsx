@@ -44,7 +44,15 @@ export default function ContactAdmin() {
       if (response.ok) {
         const content = await response.json();
         if (content.contact) {
-          setContactData(content.contact);
+          setContactData((prev) => ({
+            ...prev,
+            ...content.contact,
+            // Ensure socialMedia exists, merge with default if missing
+            socialMedia: {
+              ...prev.socialMedia,
+              ...(content.contact.socialMedia || {}),
+            },
+          }));
         }
       }
     } catch (error) {

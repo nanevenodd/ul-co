@@ -4,6 +4,12 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { promises as fs } from "fs";
 import path from "path";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Portfolio",
+  description: "Koleksi fashion UL.CO berbasis kain ulos - Marparbuei, Butet, dan Aksesoris eksklusif",
+};
 
 async function getCollections() {
   try {

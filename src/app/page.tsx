@@ -4,6 +4,12 @@ import Footer from "@/components/layout/Footer";
 import FeaturedCollections from "@/components/sections/FeaturedCollections";
 import { promises as fs } from "fs";
 import path from "path";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "UL.CO - Fashion berbasis kain ulos dengan desain modern dan berkelanjutan oleh Taruli Pasaribu",
+};
 
 async function getContent() {
   try {
