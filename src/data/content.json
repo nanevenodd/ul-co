@@ -1,0 +1,350 @@
+{
+  "hero": {
+    "title": "UL.CO",
+    "subtitle": "Fashion Berbasis Kain Ulos",
+    "description": "Menghadirkan fashion berbasis kain ulos dengan desain modern dan berkelanjutan",
+    "ctaText": "Explore Collections",
+    "ctaLink": "/portfolio",
+    "ctaSecondaryText": "Learn More",
+    "ctaSecondaryLink": "/about",
+    "backgroundImage": "/uploads/hero-1758391109645.jpg"
+  },
+  "philosophy": {
+    "title": "Design ",
+    "subtitle": "Tradisi Bertemu ",
+    "description": "UL.CO menggabungkan warisan budaya kain ulos dengan desain kontemporer, menciptakan fashion yang berkelanjutan dan ",
+    "backgroundImage": "/philosophy-bg.jpg"
+  },
+  "collections": {
+    "marparbuei": {
+      "id": "marparbuei",
+      "name": "Marparbuei",
+      "description": "Koleksi tradisional dengan sentuhan modern yang memadukan kearifan lokal dengan desain kontempo",
+      "image": "/uploads/hero-1758413922506.jpg",
+      "products": [
+        {
+          "id": "mp001",
+          "name": "Outer Ulos",
+          "description": "Konsep yang menggabungkan perpaduan budaya Batak melalui interpretasi modern dari ritual tradisional Marparbuei, dengan esensi padat storytelling makna kehidupan dan kesatuan budaya dalam kekinian.",
+          "price": "Rp 300,000",
+          "images": [
+            "/uploads/hero-1758414317738.jpg"
+          ],
+          "materials": [
+            "Premium Cotton",
+            "Traditional Ulos",
+            "Gold Thread"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Traditional Red",
+            "Classic Black"
+          ],
+          "features": [
+            "Hand-embroidered details",
+            "Traditional patterns",
+            "Modern cut"
+          ],
+          "featured": true
+        },
+        {
+          "id": "mp002",
+          "name": "Kemeja Bordir Premium",
+          "description": "Variasi elegan untuk acara formal dengan detail ulos yang memukau",
+          "price": "Rp 650,000",
+          "images": [
+            "/uploads/hero-1758416096094.jpg"
+          ],
+          "materials": [
+            "Kain Ulos Batak",
+            "Silk Blend"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "White",
+            "Cream"
+          ],
+          "features": [
+            "Premium embroidery",
+            "Formal design",
+            "Comfortable fit"
+          ],
+          "featured": false
+        },
+        {
+          "id": "mp003",
+          "name": "Outer Hantak Hamule",
+          "description": "Desain modern dengan sentuhan tradisional untuk tampilan yang elegan",
+          "price": "Rp 400,000",
+          "images": [
+            "/uploads/hero-1758414104637.jpg"
+          ],
+          "materials": [
+            "Traditional Ulos",
+            "Modern Cotton"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Traditional Pattern",
+            "Modern Black"
+          ],
+          "features": [
+            "Handwoven details",
+            "Cultural significance",
+            "Versatile styling"
+          ],
+          "featured": true
+        },
+        {
+          "id": "ma004",
+          "name": "Test",
+          "description": "",
+          "price": "500000",
+          "images": [
+            "/uploads/hero-1758416185753.jpg"
+          ],
+          "materials": [
+            "Batak"
+          ],
+          "sizes": [
+            "S",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Blue"
+          ],
+          "featured": true
+        }
+      ]
+    },
+    "butet": {
+      "id": "butet",
+      "name": "Butet",
+      "description": "Koleksi modern yang menggabungkan kenyamanan sehari-hari dengan keindahan motif ulos",
+      "image": "/uploads/hero-1758416053264.jpg",
+      "products": [
+        {
+          "id": "bt001",
+          "name": "Butet Casual",
+          "description": "Perfect untuk aktivitas sehari-hari dengan kenyamanan maksimal",
+          "price": "Rp 350,000",
+          "images": [
+            "/products/bt001-1.jpg",
+            "/products/bt001-2.jpg"
+          ],
+          "materials": [
+            "Kain Ulos Batak",
+            "Cotton Combed"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Natural",
+            "Earth Tone"
+          ],
+          "features": [
+            "Daily comfort",
+            "Breathable fabric",
+            "Easy care"
+          ],
+          "featured": true
+        },
+        {
+          "id": "bt002",
+          "name": "Butet Chic",
+          "description": "Desain chic untuk tampilan kasual yang tetap stylish",
+          "price": "Rp 450,000",
+          "images": [
+            "/products/bt002-1.jpg",
+            "/products/bt002-2.jpg"
+          ],
+          "materials": [
+            "Kain Ulos Batak",
+            "Linen Cotton"
+          ],
+          "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ],
+          "colors": [
+            "Soft Pink",
+            "Light Blue"
+          ],
+          "features": [
+            "Stylish design",
+            "Comfortable wear",
+            "Versatile styling"
+          ],
+          "featured": true
+        }
+      ]
+    },
+    "aksesoris": {
+      "id": "aksesoris",
+      "name": "Aksesoris",
+      "description": "Pelengkap fashion dengan sentuhan ulos untuk melengkapi penampilan Anda",
+      "image": "/uploads/hero-1758414986583.jpg",
+      "products": [
+        {
+          "id": "ak001",
+          "name": "Tas Ulos Heritage",
+          "description": "Tas cantik dengan motif ulos untuk melengkapi penampilan",
+          "price": "Rp 250,000",
+          "images": [
+            "/products/ak001-1.jpg",
+            "/products/ak001-2.jpg"
+          ],
+          "materials": [
+            "Kain Ulos Batak",
+            "Kulit Sintetis"
+          ],
+          "colors": [
+            "Natural",
+            "Brown",
+            "Black"
+          ],
+          "features": [
+            "Authentic ulos pattern",
+            "Durable construction",
+            "Multiple compartments"
+          ],
+          "featured": true
+        },
+        {
+          "id": "ak002",
+          "name": "Scarf Ulos Modern",
+          "description": "Scarf multifungsi dengan motif ulos yang dapat digunakan berbagai cara",
+          "price": "Rp 150,000",
+          "images": [
+            "/products/ak002-1.jpg",
+            "/products/ak002-2.jpg"
+          ],
+          "materials": [
+            "Kain Ulos Batak",
+            "Satin"
+          ],
+          "colors": [
+            "Red",
+            "Blue",
+            "Green",
+            "Gold"
+          ],
+          "features": [
+            "Versatile use",
+            "Premium satin finish",
+            "Traditional motifs"
+          ],
+          "featured": true
+        }
+      ]
+    }
+  },
+  "about": {
+    "introduction": "UL.CO, where traditional Indonesian artistry meets contemporary fashion design.",
+    "designerName": "Taruli Pasaribu",
+    "experience": "10+ years of experience in",
+    "specialization": "Traditional meets Modern",
+    "philosophyText": "Our design philosophy centers on creating timeless pieces that celebrate cultural heritage while embracing modern aesthetics.",
+    "philosophyQuote": "Setiap karya adalah cerita, setiap desain adalah warisan. Fashion bukan hanya tentang penampilan, tetapi juga tentang identitas dan makna.",
+    "biography": "Taruli Pasaribu is a renowned fashion designer who has dedicated her career to bridging the gap between traditional Indonesian textiles and contemporary fashion. Her work has been featured in various fashion shows across Indonesia and Southeast Asia.",
+    "heritageDescription": "Melestarikan warisan budaya ulos untuk generasi mendatang",
+    "innovationDescription": "Menggabungkan tradisi dengan desain modern dan kontemporer",
+    "sustainabilityDescription": "Menciptakan fashion berkelanjutan yang ramah lingkungan",
+    "simpleAchievements": [
+      "50+ Collections Created",
+      "100+ Happy Clients",
+      "3 Major Awards",
+      "Featured in 15+ Shows",
+      "10+ Years Experience"
+    ],
+    "achievements": [
+      {
+        "id": 1,
+        "title": "Best Designer Award",
+        "year": "2023",
+        "organization": "Indonesia Fashion Week",
+        "description": "Recognized for innovative use of traditional patterns in"
+      },
+      {
+        "id": 2,
+        "title": "Cultural Heritage Award",
+        "year": "2022",
+        "organization": "Ministry of Culture",
+        "description": "Honored for preserving traditional textile techniques"
+      }
+    ],
+    "designerPhoto": "/uploads/hero-1758391129833.jpg"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Temukan jawaban untuk pertanyaan yang sering diajukan",
+    "items": [
+      {
+        "id": 1,
+        "question": "Apa itu kain ulos dan mengapa UL.CO menggunakannya?",
+        "answer": "Kain ulos adalah kain tradisional Batak yang memiliki makna filosofis mendalam. UL.CO menggunakan ulos karena keindahan motifnya, kualitas bahan yang tinggi, dan sebagai bentuk pelestarian warisan budaya Indonesia."
+      },
+      {
+        "id": 2,
+        "question": "Apakah produk UL.CO tersedia dalam berbagai ukuran?",
+        "answer": "Ya, kami menyediakan berbagai ukuran mulai dari S hingga XL. Kami juga menerima pesanan custom dengan ukuran khusus sesuai kebutuhan Anda."
+      },
+      {
+        "id": 3,
+        "question": "Test",
+        "answer": "test"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Mari berdiskusi tentang proyek fashion impian",
+    "whatsapp": "+62 822-8304-5172",
+    "whatsappMessage": "Halo, saya tertarik dengan ",
+    "email": "admin@ulco.com",
+    "address": "Jl. Fashion Street No. 123, Jakarta, Indonesia",
+    "workingHours": "Senin - Jumat: 09",
+    "socialMedia": {
+      "instagram": "ul.co_tarulipasaribu/",
+      "facebook": "taruli.pasaribu.419951",
+      "tiktok": "@ulco_official"
+    },
+    "quickFaqs": [
+      {
+        "question": "Berapa lama proses pembuatan custom design?",
+        "answer": "Proses custom design biasanya memakan waktu 2-4 minggu tergantung kompleksitas desain."
+      },
+      {
+        "question": "Apakah bisa konsultasi online?",
+        "answer": "Ya, kami menyediakan layanan konsultasi online via video call atau WhatsApp."
+      },
+      {
+        "question": "Bagaimana cara pemesanan?",
+        "answer": "Anda bisa memesan melalui form di bawah ini, WhatsApp, atau kunjungi studio kami langsung."
+      }
+    ]
+  },
+  "lastUpdated": "2025-09-21T01:39:57.540Z"
+}
