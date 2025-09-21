@@ -2,7 +2,7 @@
   "hero": {
     "title": "UL.CO",
     "subtitle": "Fashion Berbasis Kain Ulos",
-    "description": "Menghadirkan fashion berbasis kain ulos dengan desain modern dan berkelanjutan",
+    "description": "Warisan Elegant, Keindahan Abadi",
     "ctaText": "Explore Collections",
     "ctaLink": "/portfolio",
     "ctaSecondaryText": "Learn More",
@@ -11,8 +11,8 @@
   },
   "philosophy": {
     "title": "Design ",
-    "subtitle": "Tradisi Bertemu ",
-    "description": "UL.CO menggabungkan warisan budaya kain ulos dengan desain kontemporer, menciptakan fashion yang berkelanjutan dan ",
+    "subtitle": "Budaya Batak dalam balutan gaya modern",
+    "description": "UL.CO memadukan keanggunan ulos Batak dengan desain masa kini untuk gaya yang abadi.",
     "backgroundImage": "/philosophy-bg.jpg"
   },
   "collections": {
@@ -307,5 +307,5 @@
       }
     ]
   },
-  "lastUpdated": "2025-09-21T05:52:16.088Z"
+  "lastUpdated": "2025-09-21T06:25:24.487Z"
 }

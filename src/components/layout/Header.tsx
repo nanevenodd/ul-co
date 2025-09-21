@@ -51,8 +51,6 @@ export default function Header() {
     return "Taruli Pasaribu Fashion";
   };
 
-
-
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,9 +65,7 @@ export default function Header() {
                 <span className="text-2xl font-bold" style={{ color: "#921e27" }}>
                   UL.CO
                 </span>
-                <span className="text-xs text-gray-500 hidden sm:block">
-                  {getSubtitle()}
-                </span>
+                <span className="text-xs text-gray-500 hidden sm:block">{getSubtitle()}</span>
               </div>
             </Link>
           </div>

@@ -248,7 +248,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ col
                         </div>
                       </div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
-                      {product.price && <p className="text-gray-600 font-medium">Rp {parseInt(product.price).toLocaleString("id-ID")}</p>}
+                      {product.price && <p className="text-gray-600 font-medium">{product.price}</p>}
                     </div>
                   ))}
               </div>

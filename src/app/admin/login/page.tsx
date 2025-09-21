@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,14 +20,19 @@ export default function AdminLogin() {
       const result = await signIn("credentials", {
         email,
         password,
-        callbackUrl: "/admin/dashboard",
-        redirect: true,
+        redirect: false,
       });
+
+      console.log("Login result:", result);
 
       if (result?.error) {
         setError("Invalid email or password");
+      } else if (result?.ok) {
+        // Wait a bit for session to be established
+        setTimeout(() => {
+          router.push("/admin/dashboard");
+        }, 100);
       }
-      // Let NextAuth handle the redirect
     } catch {
       setError("An error occurred. Please try again.");
     } finally {

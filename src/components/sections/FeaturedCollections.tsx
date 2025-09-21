@@ -60,7 +60,7 @@ export default function FeaturedCollections({ collections }: FeaturedCollections
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">{collection.name}</h3>
                 <p className="text-gray-600 mb-4">{collection.description}</p>
 
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                   <Link href={`/portfolio/${collection.id}`} className="inline-flex items-center px-4 py-2 bg-[#921e27] text-white rounded-md hover:bg-[#7a1921] transition-colors">
                     View Collection
                     <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,7 +68,7 @@ export default function FeaturedCollections({ collections }: FeaturedCollections
                     </svg>
                   </Link>
 
-                  <span className="text-sm text-gray-500">{collection.products && collection.products.length > 0 ? `Starting from ${collection.products[0].price}` : "Coming Soon"}</span>
+                  <span className="text-sm text-gray-500 font-medium">{collection.products && collection.products.length > 0 ? `Starting from ${collection.products[0].price}` : "Coming Soon"}</span>
                 </div>
               </div>
             </div>

@@ -35,6 +35,8 @@ export const authOptions: NextAuthOptions = {
   ],
   session: {
     strategy: "jwt",
+    maxAge: 24 * 60 * 60, // 24 hours
+    updateAge: 24 * 60 * 60, // 24 hours
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -51,15 +53,11 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    async redirect({ url, baseUrl }) {
-      // Handle redirect after login
-      if (url.startsWith("/admin/dashboard")) return url;
-      if (url.startsWith(baseUrl)) return url;
-      return baseUrl + "/admin/dashboard";
-    },
+
   },
   pages: {
     signIn: "/admin/login",
   },
+
   secret: process.env.NEXTAUTH_SECRET,
 };
