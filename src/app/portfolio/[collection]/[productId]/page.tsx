@@ -46,7 +46,7 @@ export default function ProductDetail() {
   const [isFavorite, setIsFavorite] = useState(false);
   const [whatsappSettings, setWhatsappSettings] = useState({
     number: "6281234567890",
-    messageTemplate: "Hi, I'm interested in this product: {productName} - {productPrice}. Can you provide more details?"
+    messageTemplate: "Hi, I'm interested in this product: {productName} - {productPrice}. Can you provide more details?",
   });
 
   // Fetch product and collection data
@@ -109,9 +109,7 @@ export default function ProductDetail() {
     if (!product) return;
 
     // Use template from admin settings or fallback to default
-    let message = whatsappSettings.messageTemplate
-      .replace("{productName}", product.name)
-      .replace("{productPrice}", product.price);
+    let message = whatsappSettings.messageTemplate.replace("{productName}", product.name).replace("{productPrice}", product.price);
 
     // Add size and quantity info
     if (selectedSize) {

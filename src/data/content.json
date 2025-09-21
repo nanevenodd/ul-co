@@ -27,27 +27,11 @@
           "name": "Outer Hitam ulos hitam",
           "description": "Variasi elegan untuk acara formal dengan detail ulos yang memukau",
           "price": "Rp 400,000",
-          "images": [
-            "/uploads/hero-1758430058399.png",
-            "/uploads/hero-1758430063201.png"
-          ],
-          "materials": [
-            "Kain Ulos Batak"
-          ],
-          "sizes": [
-            "S",
-            "M",
-            "L",
-            "XL"
-          ],
-          "colors": [
-            "Hitam"
-          ],
-          "features": [
-            "Premium embroidery",
-            "Formal design",
-            "Comfortable fit"
-          ],
+          "images": ["/uploads/hero-1758430058399.png", "/uploads/hero-1758430063201.png"],
+          "materials": ["Kain Ulos Batak"],
+          "sizes": ["S", "M", "L", "XL"],
+          "colors": ["Hitam"],
+          "features": ["Premium embroidery", "Formal design", "Comfortable fit"],
           "featured": false
         },
         {
@@ -55,26 +39,11 @@
           "name": "Outer Coklat Ulos hitam",
           "description": "Desain modern dengan sentuhan tradisional untuk tampilan yang elegan",
           "price": "Rp 400,000",
-          "images": [
-            "/uploads/hero-1758430108440.png"
-          ],
-          "materials": [
-            "Traditional Ulos"
-          ],
-          "sizes": [
-            "S",
-            "M",
-            "L",
-            "XL"
-          ],
-          "colors": [
-            "Coklat"
-          ],
-          "features": [
-            "Handwoven details",
-            "Cultural significance",
-            "Versatile styling"
-          ],
+          "images": ["/uploads/hero-1758430108440.png"],
+          "materials": ["Traditional Ulos"],
+          "sizes": ["S", "M", "L", "XL"],
+          "colors": ["Coklat"],
+          "features": ["Handwoven details", "Cultural significance", "Versatile styling"],
           "featured": true
         }
       ]
@@ -90,26 +59,10 @@
           "name": "Outer Ulos",
           "description": "Tampil berkelas di setiap momen formal dengan outer Pucca, dihiasi detail payet yang mewah dan elegan. Perpaduan modern & tradisional yang siap melengkapi koleksi istimewamu.",
           "price": "Rp 450.000",
-          "images": [
-            "/uploads/hero-1758416053264.jpg",
-            "/uploads/hero-1758429434100.png",
-            "/uploads/hero-1758429438598.png",
-            "/uploads/hero-1758429442971.png"
-          ],
-          "materials": [
-            "Kain Ulos",
-            "Cotton"
-          ],
-          "sizes": [
-            "S",
-            "M",
-            "L",
-            "XL"
-          ],
-          "colors": [
-            "Putih",
-            "Ulos Pucca"
-          ],
+          "images": ["/uploads/hero-1758416053264.jpg", "/uploads/hero-1758429434100.png", "/uploads/hero-1758429438598.png", "/uploads/hero-1758429442971.png"],
+          "materials": ["Kain Ulos", "Cotton"],
+          "sizes": ["S", "M", "L", "XL"],
+          "colors": ["Putih", "Ulos Pucca"],
           "featured": true
         }
       ]
@@ -125,9 +78,7 @@
           "name": "Anting Bulat Coklat",
           "description": "",
           "price": "Rp 70.000",
-          "images": [
-            "/uploads/hero-1758424965091.png"
-          ],
+          "images": ["/uploads/hero-1758424965091.png"],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -138,9 +89,7 @@
           "name": "Anting Lengkung",
           "description": "",
           "price": "Rp 68.000",
-          "images": [
-            "/uploads/hero-1758426641673.png"
-          ],
+          "images": ["/uploads/hero-1758426641673.png"],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -151,9 +100,7 @@
           "name": "Anting Bola 2",
           "description": "",
           "price": "Rp 67.000",
-          "images": [
-            "/uploads/hero-1758426680075.png"
-          ],
+          "images": ["/uploads/hero-1758426680075.png"],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -164,9 +111,7 @@
           "name": "Anting Bola 1",
           "description": "",
           "price": "Rp 65.000",
-          "images": [
-            "/uploads/hero-1758426814192.png"
-          ],
+          "images": ["/uploads/hero-1758426814192.png"],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -177,9 +122,7 @@
           "name": "Anting Keong",
           "description": "",
           "price": "Rp 69.000",
-          "images": [
-            "/uploads/hero-1758426836288.png"
-          ],
+          "images": ["/uploads/hero-1758426836288.png"],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -190,9 +133,7 @@
           "name": "Anting Bola Gantung",
           "description": "",
           "price": "Rp 70.000",
-          "images": [
-            "/uploads/hero-1758426879484.png"
-          ],
+          "images": ["/uploads/hero-1758426879484.png"],
           "materials": [],
           "sizes": [],
           "colors": [],
@@ -212,13 +153,7 @@
     "heritageDescription": "Melestarikan warisan budaya ulos untuk generasi mendatang",
     "innovationDescription": "Menggabungkan tradisi dengan desain modern dan kontemporer",
     "sustainabilityDescription": "Menciptakan fashion berkelanjutan yang ramah lingkungan",
-    "simpleAchievements": [
-      "50+ Collections Created",
-      "100+ Happy Clients",
-      "3 Major Awards",
-      "Featured in 15+ Shows",
-      "10+ Years Experience"
-    ],
+    "simpleAchievements": ["50+ Collections Created", "100+ Happy Clients", "3 Major Awards", "Featured in 15+ Shows", "10+ Years Experience"],
     "achievements": [
       {
         "id": 1,

@@ -42,7 +42,7 @@ export async function PUT(request: NextRequest) {
 
     // Merge updates with current content
     const updatedContent = { ...currentContent, ...updates };
-    
+
     // Add timestamp
     updatedContent.lastUpdated = new Date().toISOString();
 

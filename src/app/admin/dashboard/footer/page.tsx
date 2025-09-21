@@ -53,7 +53,7 @@ export default function FooterManagement() {
       try {
         const response = await fetch("/api/content");
         const data = await response.json();
-        
+
         // Map data from content.json to footer structure
         if (data) {
           setFooterData({
@@ -334,9 +334,7 @@ export default function FooterManagement() {
                 <h3 className="text-lg leading-6 font-medium text-gray-900">Social Media Links</h3>
                 <p className="text-sm text-gray-500">Social media links yang tampil di footer</p>
               </div>
-              <button
-                onClick={() => setShowAddSocialLink(true)}
-                className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#921e27] hover:bg-red-800">
+              <button onClick={() => setShowAddSocialLink(true)} className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#921e27] hover:bg-red-800">
                 <PlusIcon className="h-4 w-4 mr-1" />
                 Add Link
               </button>
@@ -352,11 +350,13 @@ export default function FooterManagement() {
                     <label className="block text-sm font-medium text-gray-700">Platform</label>
                     <select
                       value={newSocialLink.icon}
-                      onChange={(e) => setNewSocialLink({ 
-                        ...newSocialLink, 
-                        icon: e.target.value,
-                        name: socialPlatforms.find(p => p.value === e.target.value)?.label || ""
-                      })}
+                      onChange={(e) =>
+                        setNewSocialLink({
+                          ...newSocialLink,
+                          icon: e.target.value,
+                          name: socialPlatforms.find((p) => p.value === e.target.value)?.label || "",
+                        })
+                      }
                       className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#921e27] focus:border-[#921e27] sm:text-sm">
                       {socialPlatforms.map((platform) => (
                         <option key={platform.value} value={platform.value}>
@@ -384,10 +384,7 @@ export default function FooterManagement() {
                       className="px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
                       Cancel
                     </button>
-                    <button
-                      onClick={handleAddSocialLink}
-                      disabled={!newSocialLink.url}
-                      className="px-3 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-[#921e27] hover:bg-red-800 disabled:bg-gray-300">
+                    <button onClick={handleAddSocialLink} disabled={!newSocialLink.url} className="px-3 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-[#921e27] hover:bg-red-800 disabled:bg-gray-300">
                       Add
                     </button>
                   </div>
@@ -410,14 +407,12 @@ export default function FooterManagement() {
                       <p className="text-sm text-gray-500">{link.url}</p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => handleDeleteSocialLink(link.id)}
-                    className="p-1 text-red-600 hover:text-red-800">
+                  <button onClick={() => handleDeleteSocialLink(link.id)} className="p-1 text-red-600 hover:text-red-800">
                     <TrashIcon className="h-4 w-4" />
                   </button>
                 </div>
               ))}
-              
+
               {footerData.socialLinks.length === 0 && (
                 <div className="text-center py-6 text-gray-500">
                   <p>No social links added yet.</p>

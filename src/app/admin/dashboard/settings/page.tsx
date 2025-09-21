@@ -20,9 +20,9 @@ export default function SettingsPage() {
   const [settings, setSettings] = useState<Settings>({
     whatsapp: {
       number: "",
-      messageTemplate: "Hi, I'm interested in this product: {productName} - {productPrice}. Can you provide more details?"
+      messageTemplate: "Hi, I'm interested in this product: {productName} - {productPrice}. Can you provide more details?",
     },
-    socialLinks: []
+    socialLinks: [],
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -34,14 +34,14 @@ export default function SettingsPage() {
       try {
         const response = await fetch("/api/content");
         const data = await response.json();
-        
+
         if (data.settings) {
           setSettings(data.settings);
         }
         if (data.footer?.socialLinks) {
-          setSettings(prev => ({
+          setSettings((prev) => ({
             ...prev,
-            socialLinks: data.footer.socialLinks
+            socialLinks: data.footer.socialLinks,
           }));
         }
       } catch (error) {
@@ -63,9 +63,9 @@ export default function SettingsPage() {
         body: JSON.stringify({
           settings: {
             whatsapp: settings.whatsapp,
-            socialLinks: settings.socialLinks
-          }
-        })
+            socialLinks: settings.socialLinks,
+          },
+        }),
       });
 
       if (response.ok) {
@@ -86,27 +86,25 @@ export default function SettingsPage() {
       id: Date.now().toString(),
       name: "",
       url: "",
-      icon: "globe"
+      icon: "globe",
     };
-    setSettings(prev => ({
+    setSettings((prev) => ({
       ...prev,
-      socialLinks: [...prev.socialLinks, newLink]
+      socialLinks: [...prev.socialLinks, newLink],
     }));
   };
 
   const handleSocialLinkUpdate = (id: string, field: string, value: string) => {
-    setSettings(prev => ({
+    setSettings((prev) => ({
       ...prev,
-      socialLinks: prev.socialLinks.map(link =>
-        link.id === id ? { ...link, [field]: value } : link
-      )
+      socialLinks: prev.socialLinks.map((link) => (link.id === id ? { ...link, [field]: value } : link)),
     }));
   };
 
   const handleSocialLinkDelete = (id: string) => {
-    setSettings(prev => ({
+    setSettings((prev) => ({
       ...prev,
-      socialLinks: prev.socialLinks.filter(link => link.id !== id)
+      socialLinks: prev.socialLinks.filter((link) => link.id !== id),
     }));
   };
 
@@ -118,9 +116,9 @@ export default function SettingsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           footer: {
-            socialLinks: settings.socialLinks
-          }
-        })
+            socialLinks: settings.socialLinks,
+          },
+        }),
       });
 
       if (response.ok) {
@@ -156,23 +154,13 @@ export default function SettingsPage() {
         <nav className="-mb-px flex space-x-8">
           <button
             onClick={() => setActiveTab("whatsapp")}
-            className={`py-2 px-1 border-b-2 font-medium text-sm ${
-              activeTab === "whatsapp"
-                ? "border-[#921e27] text-[#921e27]"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            }`}
-          >
+            className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === "whatsapp" ? "border-[#921e27] text-[#921e27]" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}>
             <ChatBubbleLeftRightIcon className="w-5 h-5 inline mr-2" />
             WhatsApp Settings
           </button>
           <button
             onClick={() => setActiveTab("social")}
-            className={`py-2 px-1 border-b-2 font-medium text-sm ${
-              activeTab === "social"
-                ? "border-[#921e27] text-[#921e27]"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            }`}
-          >
+            className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === "social" ? "border-[#921e27] text-[#921e27]" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}>
             <LinkIcon className="w-5 h-5 inline mr-2" />
             Social Links
           </button>
@@ -197,15 +185,15 @@ export default function SettingsPage() {
                 id="whatsapp-number"
                 placeholder="e.g. 6281234567890 (with country code, no +)"
                 value={settings.whatsapp.number}
-                onChange={(e) => setSettings(prev => ({
-                  ...prev,
-                  whatsapp: { ...prev.whatsapp, number: e.target.value }
-                }))}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    whatsapp: { ...prev.whatsapp, number: e.target.value },
+                  }))
+                }
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
               />
-              <p className="text-sm text-gray-500 mt-1">
-                Enter your WhatsApp business number with country code (without + sign)
-              </p>
+              <p className="text-sm text-gray-500 mt-1">Enter your WhatsApp business number with country code (without + sign)</p>
             </div>
 
             <div>
@@ -217,10 +205,12 @@ export default function SettingsPage() {
                 rows={4}
                 placeholder="Default message when customers click 'Order via WhatsApp'"
                 value={settings.whatsapp.messageTemplate}
-                onChange={(e) => setSettings(prev => ({
-                  ...prev,
-                  whatsapp: { ...prev.whatsapp, messageTemplate: e.target.value }
-                }))}
+                onChange={(e) =>
+                  setSettings((prev) => ({
+                    ...prev,
+                    whatsapp: { ...prev.whatsapp, messageTemplate: e.target.value },
+                  }))
+                }
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
               />
               <p className="text-sm text-gray-500 mt-1">
@@ -229,11 +219,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="pt-4">
-              <button
-                onClick={handleWhatsAppSave}
-                disabled={saving}
-                className="bg-[#921e27] text-white px-6 py-2 rounded-md hover:bg-[#7a1a22] focus:outline-none focus:ring-2 focus:ring-[#921e27] focus:ring-offset-2 disabled:opacity-50"
-              >
+              <button onClick={handleWhatsAppSave} disabled={saving} className="bg-[#921e27] text-white px-6 py-2 rounded-md hover:bg-[#7a1a22] focus:outline-none focus:ring-2 focus:ring-[#921e27] focus:ring-offset-2 disabled:opacity-50">
                 {saving ? "Saving..." : "Save WhatsApp Settings"}
               </button>
             </div>
@@ -249,10 +235,7 @@ export default function SettingsPage() {
               <LinkIcon className="w-6 h-6 text-[#921e27] mr-3" />
               <h2 className="text-xl font-semibold text-gray-900">Social Media Links</h2>
             </div>
-            <button
-              onClick={handleSocialLinkAdd}
-              className="bg-[#921e27] text-white px-4 py-2 rounded-md hover:bg-[#7a1a22] focus:outline-none focus:ring-2 focus:ring-[#921e27] focus:ring-offset-2"
-            >
+            <button onClick={handleSocialLinkAdd} className="bg-[#921e27] text-white px-4 py-2 rounded-md hover:bg-[#7a1a22] focus:outline-none focus:ring-2 focus:ring-[#921e27] focus:ring-offset-2">
               Add Link
             </button>
           </div>
@@ -280,8 +263,7 @@ export default function SettingsPage() {
                   <select
                     value={link.icon}
                     onChange={(e) => handleSocialLinkUpdate(link.id, "icon", e.target.value)}
-                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#921e27] focus:border-transparent"
-                  >
+                    className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#921e27] focus:border-transparent">
                     <option value="globe">Website</option>
                     <option value="instagram">Instagram</option>
                     <option value="facebook">Facebook</option>
@@ -291,10 +273,7 @@ export default function SettingsPage() {
                     <option value="tiktok">TikTok</option>
                   </select>
                 </div>
-                <button
-                  onClick={() => handleSocialLinkDelete(link.id)}
-                  className="text-red-600 hover:text-red-800 focus:outline-none"
-                >
+                <button onClick={() => handleSocialLinkDelete(link.id)} className="text-red-600 hover:text-red-800 focus:outline-none">
                   Delete
                 </button>
               </div>
@@ -314,8 +293,7 @@ export default function SettingsPage() {
               <button
                 onClick={handleSocialLinksSave}
                 disabled={saving}
-                className="bg-[#921e27] text-white px-6 py-2 rounded-md hover:bg-[#7a1a22] focus:outline-none focus:ring-2 focus:ring-[#921e27] focus:ring-offset-2 disabled:opacity-50"
-              >
+                className="bg-[#921e27] text-white px-6 py-2 rounded-md hover:bg-[#7a1a22] focus:outline-none focus:ring-2 focus:ring-[#921e27] focus:ring-offset-2 disabled:opacity-50">
                 {saving ? "Saving..." : "Save Social Links"}
               </button>
             </div>
