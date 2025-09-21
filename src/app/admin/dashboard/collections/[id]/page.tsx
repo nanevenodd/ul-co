@@ -165,9 +165,9 @@ export default function CollectionDetail() {
 
       if (response.ok) {
         const result = await response.json();
-        setNewProduct({ 
-          ...newProduct, 
-          images: [...newProduct.images, result.filePath] 
+        setNewProduct({
+          ...newProduct,
+          images: [...newProduct.images, result.filePath],
         });
         alert("Image uploaded successfully!");
       } else {
@@ -428,7 +428,7 @@ export default function CollectionDetail() {
                   />
                 </div>
               </div>
-              
+
               {/* Product Images Upload */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Product Images</label>
@@ -455,28 +455,21 @@ export default function CollectionDetail() {
                       />
                     </label>
                   </div>
-                  
+
                   {/* Image Preview Grid */}
                   {newProduct.images.length > 0 && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {newProduct.images.map((image, index) => (
                         <div key={index} className="relative aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                          <img
-                            src={image}
-                            alt={`Product image ${index + 1}`}
-                            className="w-full h-full object-cover"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => handleRemoveImage(index)}
-                            className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-700">
+                          <img src={image} alt={`Product image ${index + 1}`} className="w-full h-full object-cover" />
+                          <button type="button" onClick={() => handleRemoveImage(index)} className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-700">
                             ×
                           </button>
                         </div>
                       ))}
                     </div>
                   )}
-                  
+
                   {uploading && (
                     <div className="text-center">
                       <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-[#921e27]"></div>

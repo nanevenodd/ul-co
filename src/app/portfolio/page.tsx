@@ -8,15 +8,13 @@ import path from "path";
 async function getCollections() {
   try {
     // Read collections directly from content.json for SSR
-    const contentFilePath = path.join(process.cwd(), 'src', 'data', 'content.json');
-    const fileContents = await fs.readFile(contentFilePath, 'utf8');
+    const contentFilePath = path.join(process.cwd(), "src", "data", "content.json");
+    const fileContents = await fs.readFile(contentFilePath, "utf8");
     const data = JSON.parse(fileContents);
-    
+
     // Convert collections object to array
-    const collectionsArray = data.collections 
-      ? Object.values(data.collections)
-      : [];
-    
+    const collectionsArray = data.collections ? Object.values(data.collections) : [];
+
     return {
       collections: collectionsArray,
     };
@@ -85,9 +83,9 @@ export default async function Portfolio() {
           {collectionData.map((collection: Collection) => (
             <div key={collection.id} className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow">
               <div className="relative h-64 bg-gradient-to-br from-gray-200 to-gray-300">
-                {(collection.coverImage || collection.image) ? (
-                  <Image 
-                    src={collection.coverImage || collection.image} 
+                {collection.coverImage || collection.image ? (
+                  <Image
+                    src={collection.coverImage || collection.image}
                     alt={collection.name}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -121,41 +119,41 @@ export default async function Portfolio() {
         </div>
 
         {/* Featured Products */}
-        {collectionData.some((collection: Collection) => 
-          collection.products?.some((product: Product) => product.featured)
-        ) && (
+        {collectionData.some((collection: Collection) => collection.products?.some((product: Product) => product.featured)) && (
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Featured Products</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {collectionData.map((collection: Collection) =>
-                collection.products?.filter((product: Product) => product.featured).map((product: Product) => (
-                  <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-lg transition-shadow">
-                    <div className="relative h-48 bg-gradient-to-br from-gray-200 to-gray-300">
-                      {product.images && product.images.length > 0 ? (
-                        <Image src={product.images[0]} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-gray-400">{product.name}</span>
+                collection.products
+                  ?.filter((product: Product) => product.featured)
+                  .map((product: Product) => (
+                    <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-lg transition-shadow">
+                      <div className="relative h-48 bg-gradient-to-br from-gray-200 to-gray-300">
+                        {product.images && product.images.length > 0 ? (
+                          <Image src={product.images[0]} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform" />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-gray-400">{product.name}</span>
+                          </div>
+                        )}
+                        <div className="absolute top-2 left-2 space-y-1">
+                          <div className="bg-black bg-opacity-50 text-white px-2 py-1 rounded text-xs">{collection.name}</div>
+                          <div className="bg-yellow-500 text-white px-2 py-1 rounded text-xs font-medium">Featured</div>
                         </div>
-                      )}
-                      <div className="absolute top-2 left-2 space-y-1">
-                        <div className="bg-black bg-opacity-50 text-white px-2 py-1 rounded text-xs">{collection.name}</div>
-                        <div className="bg-yellow-500 text-white px-2 py-1 rounded text-xs font-medium">Featured</div>
                       </div>
-                    </div>
 
-                    <div className="p-4">
-                      <h4 className="font-semibold text-gray-900 mb-1">{product.name}</h4>
-                      <p className="text-sm text-gray-600 mb-2 line-clamp-2">{product.description}</p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-lg font-bold text-[#921e27]">{product.price}</span>
-                        <Link href={`/portfolio/${collection.id}/${product.id}`} className="text-sm text-[#921e27] hover:text-[#7a1921] font-medium">
-                          View Details →
-                        </Link>
+                      <div className="p-4">
+                        <h4 className="font-semibold text-gray-900 mb-1">{product.name}</h4>
+                        <p className="text-sm text-gray-600 mb-2 line-clamp-2">{product.description}</p>
+                        <div className="flex justify-between items-center">
+                          <span className="text-lg font-bold text-[#921e27]">{product.price}</span>
+                          <Link href={`/portfolio/${collection.id}/${product.id}`} className="text-sm text-[#921e27] hover:text-[#7a1921] font-medium">
+                            View Details →
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  ))
               )}
             </div>
           </div>

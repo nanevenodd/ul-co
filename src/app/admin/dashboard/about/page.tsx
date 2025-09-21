@@ -159,8 +159,6 @@ export default function AboutManagement() {
     description: "",
   });
 
-
-
   const handleAddAchievement = () => {
     const achievement = {
       ...newAchievement,
@@ -189,11 +187,7 @@ export default function AboutManagement() {
   };
 
   const handleSaveEditAchievement = () => {
-    setAchievements(achievements.map(a => 
-      a.id === editingAchievement 
-        ? { ...a, ...editAchievement }
-        : a
-    ));
+    setAchievements(achievements.map((a) => (a.id === editingAchievement ? { ...a, ...editAchievement } : a)));
     setEditingAchievement(null);
     setEditAchievement({ title: "", year: "", organization: "", description: "" });
   };
@@ -334,8 +328,6 @@ export default function AboutManagement() {
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
 
@@ -395,9 +387,7 @@ export default function AboutManagement() {
             <h3 className="text-lg leading-6 font-medium text-gray-900">Simple Achievements</h3>
             <p className="mt-1 text-sm text-gray-500">Quick achievement highlights for the achievements grid</p>
           </div>
-          <button 
-            onClick={() => setSimpleAchievements([...simpleAchievements, ""])}
-            className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#921e27] hover:bg-red-800">
+          <button onClick={() => setSimpleAchievements([...simpleAchievements, ""])} className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#921e27] hover:bg-red-800">
             <PlusIcon className="h-4 w-4 mr-2" />
             Add Achievement
           </button>
@@ -416,7 +406,7 @@ export default function AboutManagement() {
                 className="flex-1 focus:ring-[#921e27] focus:border-[#921e27] block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Achievement text"
               />
-              <button 
+              <button
                 onClick={() => {
                   const updated = simpleAchievements.filter((_, i) => i !== index);
                   setSimpleAchievements(updated);
@@ -426,9 +416,7 @@ export default function AboutManagement() {
               </button>
             </div>
           ))}
-          {simpleAchievements.length === 0 && (
-            <p className="text-gray-500 text-sm">No simple achievements added yet.</p>
-          )}
+          {simpleAchievements.length === 0 && <p className="text-gray-500 text-sm">No simple achievements added yet.</p>}
         </div>
       </div>
 
@@ -529,14 +517,10 @@ export default function AboutManagement() {
                       className="focus:ring-[#921e27] focus:border-[#921e27] block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     <div className="flex justify-end space-x-3">
-                      <button
-                        onClick={handleCancelEdit}
-                        className="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200">
+                      <button onClick={handleCancelEdit} className="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200">
                         Cancel
                       </button>
-                      <button 
-                        onClick={handleSaveEditAchievement}
-                        className="px-3 py-2 text-sm font-medium text-white bg-[#921e27] border border-transparent rounded-md hover:bg-red-800">
+                      <button onClick={handleSaveEditAchievement} className="px-3 py-2 text-sm font-medium text-white bg-[#921e27] border border-transparent rounded-md hover:bg-red-800">
                         Save Changes
                       </button>
                     </div>
@@ -552,9 +536,7 @@ export default function AboutManagement() {
                       <p className="text-sm text-gray-500 mt-2">{achievement.description}</p>
                     </div>
                     <div className="flex items-center space-x-2 ml-4">
-                      <button 
-                        onClick={() => handleEditAchievement(achievement)}
-                        className="p-2 text-blue-600 hover:text-blue-800">
+                      <button onClick={() => handleEditAchievement(achievement)} className="p-2 text-blue-600 hover:text-blue-800">
                         <PencilIcon className="h-4 w-4" />
                       </button>
                       <button onClick={() => handleDeleteAchievement(achievement.id)} className="p-2 text-red-600 hover:text-red-800">

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import FeaturedCollections from "@/components/sections/FeaturedCollections"; 
+import FeaturedCollections from "@/components/sections/FeaturedCollections";
 import { promises as fs } from "fs";
 import path from "path";
 
@@ -36,15 +36,13 @@ async function getContent() {
 async function getCollections() {
   try {
     // Read collections directly from content.json for SSR
-    const contentFilePath = path.join(process.cwd(), 'src', 'data', 'content.json');
-    const fileContents = await fs.readFile(contentFilePath, 'utf8');
+    const contentFilePath = path.join(process.cwd(), "src", "data", "content.json");
+    const fileContents = await fs.readFile(contentFilePath, "utf8");
     const data = JSON.parse(fileContents);
-    
+
     // Convert collections object to array
-    const collectionsArray = data.collections 
-      ? Object.values(data.collections)
-      : [];
-    
+    const collectionsArray = data.collections ? Object.values(data.collections) : [];
+
     return {
       collections: collectionsArray,
     };
@@ -101,8 +99,7 @@ export default async function Home() {
         </div>
 
         {/* Featured Collections Preview */}
-        <FeaturedCollections collections={collectionsData.collections as any || []} />
-
+        <FeaturedCollections collections={(collectionsData.collections as any) || []} />
 
         {/* FAQ Section */}
         <div className="mt-16">

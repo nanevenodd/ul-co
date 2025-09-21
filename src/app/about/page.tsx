@@ -15,7 +15,7 @@ async function getContent() {
     return {
       about: {
         introduction: "Welcome to UL.CO, where traditional Indonesian artistry meets contemporary fashion design.",
-        designerName: "Taruli Pasaribu", 
+        designerName: "Taruli Pasaribu",
         designerPhoto: "/designer/profile.jpg",
         experience: "10+ years of experience in fashion design",
         philosophyText: "Our design philosophy centers on creating timeless pieces that celebrate cultural heritage while embracing modern aesthetics.",
@@ -27,7 +27,7 @@ async function getContent() {
 }
 
 // Force no caching for About page to ensure real-time updates
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 const achievements = ["Featured in Vogue Indonesia", "Collaborated with 50+ cultural artisans", "Showcased at Paris Fashion Week", "Sustainable fashion advocate", "Cultural preservation champion"];
@@ -58,13 +58,7 @@ export default async function About() {
               <div className="mb-8 lg:mb-0">
                 <div className="h-96 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden relative">
                   {aboutData.designerPhoto ? (
-                    <Image 
-                      src={aboutData.designerPhoto}
-                      alt={aboutData.designerName || "Designer"}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
+                    <Image src={aboutData.designerPhoto} alt={aboutData.designerName || "Designer"} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
                   ) : (
                     <span className="text-gray-400">Designer Photo</span>
                   )}

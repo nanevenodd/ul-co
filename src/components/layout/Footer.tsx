@@ -7,9 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4 text-white">
-              UL.CO
-            </h3>
+            <h3 className="text-2xl font-bold mb-4 text-white">UL.CO</h3>
             <p className="text-red-100 mb-4">Fashion berbasis kain ulos dengan desain modern dan berkelanjutan. Setiap karya adalah cerita, setiap desain adalah warisan.</p>
             <p className="text-sm text-red-200">Designer: Taruli Pasaribu</p>
           </div>

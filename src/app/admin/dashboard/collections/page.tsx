@@ -313,7 +313,7 @@ export default function CollectionsManagement() {
                   className="mt-1 focus:ring-[#921e27] focus:border-[#921e27] block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
-              
+
               {/* Cover Image Upload */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Cover Image</label>
@@ -340,26 +340,19 @@ export default function CollectionsManagement() {
                       />
                     </label>
                   </div>
-                  
+
                   {/* Preview */}
                   {newCollection.coverImage && (
                     <div className="relative w-full h-32 bg-gray-100 rounded-lg overflow-hidden">
-                      <img
-                        src={newCollection.coverImage}
-                        alt="Cover preview"
-                        className="w-full h-full object-cover"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setNewCollection({ ...newCollection, coverImage: "" })}
-                        className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700">
+                      <img src={newCollection.coverImage} alt="Cover preview" className="w-full h-full object-cover" />
+                      <button type="button" onClick={() => setNewCollection({ ...newCollection, coverImage: "" })} className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>
                     </div>
                   )}
-                  
+
                   {uploading && (
                     <div className="text-center">
                       <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-[#921e27]"></div>
